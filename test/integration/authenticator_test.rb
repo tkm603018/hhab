@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class AuthenticatorTest < ActionDispatch::IntegrationTest
-  
+
   def setup
     @user = active_user
     @token = @user.to_token
