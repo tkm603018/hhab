@@ -25,3 +25,9 @@ Things you may want to cover:
 # hhab
 # hhab
 # hhab
+
+```
+heroku run console
+```
+
+でバグをみる
