@@ -1,0 +1,40 @@
+- if signed_in?
+  = render 'sessions/signed'
+
+  div class='px-5 py-5'
+    ul class='nav flex-column pb-4'
+      li class='nav-item mb-3'
+        = link_to '追加フォームへ >', new_item_path, class: 'text-decoration-none'
+      li class='nav-item mb-3'
+        = link_to '毎月の推移 >', monthly_path, class: 'text-decoration-none'
+        
+    h2 class='fw-bold pb-1' 購入品一覧
+    - if @items.present?
+      table class='table text-center table-striped'
+        thread
+          tr
+            th scope='col' 編集
+            th scope='col' 名称
+            th scope='col' カテゴリ
+            th scope='col'
+              = sort_order "price", "価格"
+            th scope='col'
+              = sort_order "purchased_at", "購入日"
+            th scope='col' 説明
+            th scope='col'
+              = sort_order "created_at", "作成日"
+            th scope='col' 削除
+
+        tbody
+          - @items.map do |item| 
+            tr
+              td = link_to item.id, item_path(item), class: 'text-decoration-none'
+              td = item.store.title
+              td = categories[item.category]
+              td = item.price
+              td = l(item.purchased_at, format: :format2)
+              td = item.description 
+              td = l(item.created_at, format: :format3)
+              td = link_to '削除', item_path(item), method: :delete, class: 'btn btn-outline-danger'
+    - else
+      div 現在、予約枠は登録されていません

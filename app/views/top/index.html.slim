@@ -1,0 +1,10 @@
+div class='' style="padding-top: 10rem;"
+  - if signed_in?
+    div class='signed_in'
+      = render 'sessions/signed'
+
+  - else
+    div class='form-sign'
+      = render 'sessions/unsigned'
+      h2 class='fw-bold' 登録
+      div = link_to 'ユーザー登録へ', new_user_path, class: 'text-decoration-none'

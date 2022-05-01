@@ -1,0 +1,18 @@
+h1 class='navbar-brand fs-2 fw-bold p-3'
+  = link_to 'ホーム', root_path, class: 'text-decoration-none'
+
+= form_for(:user, url: users_path, html: { class: 'form-sign' }) do |f|
+  h4 class='fw-bold pb-1' ユーザー作成フォーム
+  div class='form-floating mb-3'
+    = f.text_field :name, class: 'form-control', id: 'floatingInput', placeholder: 'Name', required: true
+    = f.label 'Name', for: 'floatingInput'
+  div class='form-floating mb-3'
+    = f.email_field :email, class: 'form-control', id: 'floatingInput', placeholder: 'Email', required: true
+    = f.label 'Email', for: 'floatingInput'
+  div class='form-floating mb-3'
+    = f.password_field :password, class: 'form-control', id: 'floatingPassword', placeholder: 'Password', required: true
+    = f.label :password, for: 'floatingPassword'
+  div class='form-floating mb-5'
+    = f.password_field :password_confirmation, class: 'form-control', id: 'floatingPasswordConfirmation', placeholder: 'PasswordConfirmation', required: true
+    = f.label :password_confirmation, for: 'floatingPasswordConfirmation'
+  = f.submit '登録する', class: 'btn btn-lg btn-primary'

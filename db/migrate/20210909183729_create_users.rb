@@ -1,11 +1,10 @@
 class CreateUsers < ActiveRecord::Migration[6.1]
   def change
     create_table :users do |t|
-      t.string :name, null: false
-      t.string :email, null: false
-      t.string :password_digest, null: false
-      t.boolean :activated, null: false, default: false
-      t.boolean :admin, null: false, default: false
+      t.string :name, null: false, comment: '氏名'
+      t.string :email, null: false, comment: 'メールアドレス'
+      t.string :password_digest, null: false, comment: 'パスワード'
+      t.string :description, comment: '備考'
 
       t.timestamps
     end

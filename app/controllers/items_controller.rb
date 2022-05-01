@@ -1,69 +1,80 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: %i[ show edit update destroy ]
+before_action :signed_in_user, only: [:new, :create]
+helper_method :sort_column, :sort_direction
 
-  # GET /items or /items.json
   def index
-    @items = Item.all
+    # @items = Item.all.sort_purchased_at_asc
+    @items = Item.order("#{sort_column} #{sort_direction}")
   end
 
-  # GET /items/1 or /items/1.json
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
+  end
+
+  def sort_column
+    Item.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
+  end
+
   def show
+    @item = Item.find(params[:id])
+    @stores = Store.all
+    @stores = @stores.map{|store| store.title }.unshift('')
   end
 
-  # GET /items/new
   def new
-    @item = Item.new
+    # @items = Item.all.sort_reserved_at_asc
+    @stores = Store.all
+    @stores = @stores.map{|store| store.title }.unshift('')
   end
 
-  # GET /items/1/edit
-  def edit
-  end
-
-  # POST /items or /items.json
   def create
-    @item = Item.new(item_params)
-
-    respond_to do |format|
-      if @item.save
-        format.html { redirect_to @item, notice: "Item was successfully created." }
-        format.json { render :show, status: :created, location: @item }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @item.errors, status: :unprocessable_entity }
-      end
+    params_date = Date.parse(item_params[:purchased_at])
+    flash[:alert] = '店舗名を指定してください' if item_params[:store].blank?  && item_params[:title].blank?
+    flash[:alert] = '今日以前の日付を指定してください' if Date.today <= params_date
+    if item_params[:title].present?
+      store = Store.create!(title: item_params[:title]) 
+    else
+      store = Store.where(title: item_params[:store])&.first
     end
+    Item.create!(
+      user_id: current_user.id, 
+      store_id: store.id, 
+      purchased_at: params_date,
+      category: CATEGORIES.index(item_params[:category]), 
+      price: item_params[:price], 
+      description: item_params[:description]
+    )
+    redirect_to new_item_path, notice: !flash[:alert] && '登録しました'
   end
 
-  # PATCH/PUT /items/1 or /items/1.json
   def update
-    respond_to do |format|
-      if @item.update(item_params)
-        format.html { redirect_to @item, notice: "Item was successfully updated." }
-        format.json { render :show, status: :ok, location: @item }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @item.errors, status: :unprocessable_entity }
-      end
+    params_date = Date.parse(item_params[:purchased_at])
+    flash[:alert] = '店舗名を指定してください' if item_params[:store].blank?  && item_params[:title].blank?
+    flash[:alert] = '今日以前の日付を指定してください' if Date.today <= params_date
+    if item_params[:title].present?
+      store = Store.create!(title: item_params[:title]) 
+    else
+      store = Store.where(title: item_params[:store])&.first
     end
+    Item.find(params[:id]).update(
+      store_id: store.id, 
+      purchased_at: params_date,
+      category: CATEGORIES.index(item_params[:category]), 
+      price: item_params[:price], 
+      description: item_params[:description]
+    )
+    redirect_to items_path, notice: !flash[:alert] && '更新しました'
   end
 
-  # DELETE /items/1 or /items/1.json
   def destroy
-    @item.destroy
-    respond_to do |format|
-      format.html { redirect_to items_url, notice: "Item was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    Item.find(params[:id]).destroy
+    redirect_to request.referer, notice: '削除しました'
   end
+
+
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_item
-      @item = Item.find(params[:id])
-    end
-
-    # Only allow a list of trusted parameters through.
-    def item_params
-      params.require(:item).permit(:name, :description)
-    end
+  def item_params
+    params.require(:item)
+  end
 end
