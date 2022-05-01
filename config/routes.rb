@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   root :to => 'top#index'
   get '/overview', to: 'overview#index'
   get '/monthly', to: 'monthly#index'
+  get '/archive/', to: 'archive#index'
+  get '/archive/:slug', to: 'archive#subindex'
+  get '/archive/:slug/:subslug', to: 'archive#subsubindex'
+  
   resources :items, only: [:index, :show, :new, :create, :update, :destroy]
   resources :users, only: [:index, :show, :new, :create, :update]
   resources :sessions, only: [:create, :destroy]

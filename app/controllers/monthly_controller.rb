@@ -8,10 +8,12 @@ class MonthlyController < ApplicationController
 
   private
   def utility(store_title)
-    store = Store.where(title: store_title).first
-    @items = Item.where(user_id: current_user.id, store_id: store.id)
-    output = @items.where(category: CATEGORIES.length-2).pluck(:purchased_at, :price)
-    output.map{|x| ["#{x[0].year}/#{x[0].month}", x[1]]}
+    store = Store.where(user_id: current_user.id, title: store_title).first
+    if store.present?
+      @items = Item.where(user_id: current_user.id, store_id: store.id)
+      output = @items.where(category: CATEGORIES.length-2).pluck(:purchased_at, :price)
+      output.map{|x| ["#{x[0].year}/#{x[0].month}", x[1]]}
+    end
   end
 
 end
