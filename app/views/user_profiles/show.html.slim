@@ -1,29 +1,28 @@
 - if signed_in?
   = render 'sessions/signed'
+
   div class='mx-5'
     h2 class='fw-bold pb-1' プロフィール
     - if current_user.present?
-      table class='table'
-        tr
-          th class='text-center' ID
-          td = current_user.id
-        tr
-          th class='text-center' Email
-          td = current_user.email
-        tr
-          th class='text-center' 氏名
-          td
-            = form_with(url: user_path(current_user), method: :put, html: { class: 'd-flex justify-content-start' }) do |f|
-              div class='form-control me-2 w-50'
+      = form_with(url: user_path(current_user), method: :put, html: { class: 'd-grid'}) do |f|
+        table class='table'
+          tr
+            th class='text-center' ID
+            td = current_user.id
+          tr
+            th class='text-center' Email
+            td = current_user.email
+          tr
+            th class='text-center' 氏名
+            td
+              div class='form-control me-2 w-100'
                 = f.text_field :name, value: current_user.name, class: 'form-control', required: true
-              = f.submit '変更する', class: 'btn btn-outline-success'
-        tr
-          th class='text-center' 備考
-          td 
-            = form_with(url: user_path(current_user), method: :put, html: { class: 'd-flex justify-content-start' }) do |f|
-              div class='form-control me-2 w-50'
-                = f.text_area :description, value: current_user.description, class: 'form-control', required: true
-              = f.submit '変更する', class: 'btn btn-outline-success'
+          tr
+            th class='text-center' 備考
+            td 
+              div class='form-control me-2 w-100'
+                = f.text_area :description, value: current_user.description, class: 'form-control'
+        = f.submit '変更', class: 'btn btn-outline-success', style: "margin-inline-start: auto; width: 30%;"
 - else
   div class='navbar navbar-expand-lg navbar-light bg-light p-3 px-md-4 mb-3'
     div class='container-fluid'

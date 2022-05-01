@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2022_04_29_192302) do
   create_table "items", charset: "utf8", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "userテーブルのid"
     t.bigint "store_id", null: false, comment: "storeテーブルのid"
-    t.integer "price", null: false, comment: "タイトル"
+    t.integer "price", null: false, comment: "価格"
     t.integer "category", null: false, comment: "購入したした物のカテゴリ"
     t.datetime "purchased_at", null: false, comment: "購入したした日時"
     t.text "description", comment: "備考"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 2022_04_29_192302) do
   end
 
   create_table "stores", charset: "utf8", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "userテーブルのid"
     t.string "title", null: false, comment: "購入した店舗の名称"
     t.string "description", comment: "備考"
     t.datetime "created_at", precision: 6, null: false

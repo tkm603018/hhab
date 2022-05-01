@@ -2,11 +2,6 @@
   = render 'sessions/signed'
 
   div class='px-5 py-5'
-    ul class='nav flex-column pb-4'
-      li class='nav-item mb-3'
-        = link_to '購入品一覧へ >', items_path, class: 'text-decoration-none'
-      li class='nav-item mb-3'
-        = link_to '毎月の推移 >', monthly_path, class: 'text-decoration-none'
     h2 class='fw-bold pt-4 pb-1' 購入品追加フォーム
 
   = form_for(:item, url: '/items', html: { class: 'form-sign' }) do |f|

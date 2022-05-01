@@ -1,0 +1,19 @@
+- if signed_in?
+  = render 'sessions/signed'
+
+  div class='px-5 py-5'
+    h2 class='fw-bold pb-1' 毎月の記録一覧
+    - if @months.present?
+      table class='table text-center table-striped'
+        thread
+          tr
+            th scope='col' 年月
+            th scope='col' 件数
+
+        tbody
+          - @months.map do |month|
+            tr
+              td = link_to month[0], "#{archive_path}/#{month[0]}", class: 'text-decoration-none'
+              td = month[1]
+    - else
+      div 現在、予約枠は登録されていません

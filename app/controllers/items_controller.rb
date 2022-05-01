@@ -3,7 +3,6 @@ before_action :signed_in_user, only: [:new, :create]
 helper_method :sort_column, :sort_direction
 
   def index
-    # @items = Item.all.sort_purchased_at_asc
     @items = Item.order("#{sort_column} #{sort_direction}")
   end
 
@@ -14,16 +13,15 @@ helper_method :sort_column, :sort_direction
   def sort_column
     Item.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
   end
-
+  
   def show
     @item = Item.find(params[:id])
-    @stores = Store.all
+    @stores = Store.where(user_id: current_user.id)
     @stores = @stores.map{|store| store.title }.unshift('')
   end
 
   def new
-    # @items = Item.all.sort_reserved_at_asc
-    @stores = Store.all
+    @stores = Store.where(user_id: current_user.id)
     @stores = @stores.map{|store| store.title }.unshift('')
   end
 
@@ -32,9 +30,9 @@ helper_method :sort_column, :sort_direction
     flash[:alert] = '店舗名を指定してください' if item_params[:store].blank?  && item_params[:title].blank?
     flash[:alert] = '今日以前の日付を指定してください' if Date.today <= params_date
     if item_params[:title].present?
-      store = Store.create!(title: item_params[:title]) 
+      store = Store.create!(user_id: current_user.id, title: item_params[:title]) 
     else
-      store = Store.where(title: item_params[:store])&.first
+      store = Store.where(user_id: current_user.id, title: item_params[:store])&.first
     end
     Item.create!(
       user_id: current_user.id, 
@@ -52,9 +50,9 @@ helper_method :sort_column, :sort_direction
     flash[:alert] = '店舗名を指定してください' if item_params[:store].blank?  && item_params[:title].blank?
     flash[:alert] = '今日以前の日付を指定してください' if Date.today <= params_date
     if item_params[:title].present?
-      store = Store.create!(title: item_params[:title]) 
+      store = Store.create!(user_id: current_user.id, title: item_params[:title]) 
     else
-      store = Store.where(title: item_params[:store])&.first
+      store = Store.where(user_id: current_user.id, title: item_params[:store])&.first
     end
     Item.find(params[:id]).update(
       store_id: store.id, 
