@@ -1,0 +1,16 @@
+- if signed_in?
+  = render 'sessions/signed'
+
+  div class='px-5 py-5'
+    ul class='nav flex-column pb-4'
+      li class='nav-item mb-3'
+        = link_to '購入品一覧へ >', items_path, class: 'text-decoration-none'
+      li class='nav-item mb-3'
+        = link_to '追加フォームへ >', new_item_path, class: 'text-decoration-none'
+
+  div class='px-5'
+    div class='px-3 py-2 text-center'
+      = line_chart @utility_water, suffix: "円", title: '毎月の水道利用料推移'
+    div class='px-3 py-2 text-center'
+      = line_chart @utility_gas, suffix: "円", title: '毎月のガス利用料推移'
+

@@ -1,0 +1,6 @@
+ja:
+  time:
+    formats:
+      format1: "%Y-%m-%d"
+      format2: "%Y/%m/%d"
+      format3: "%Y/%m/%d %H:%M"

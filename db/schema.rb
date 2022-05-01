@@ -10,21 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_09_184734) do
+ActiveRecord::Schema.define(version: 2022_04_29_192302) do
+
+  create_table "expenses", charset: "utf8", force: :cascade do |t|
+    t.bigint "user_id", comment: "ユーザーのid"
+    t.string "title", null: false, comment: "購入店舗"
+    t.date "purchased_at", null: false, comment: "購入日"
+    t.integer "price", null: false, comment: "購入金額"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "items", charset: "utf8", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
+    t.bigint "user_id", null: false, comment: "userテーブルのid"
+    t.bigint "store_id", null: false, comment: "storeテーブルのid"
+    t.integer "price", null: false, comment: "タイトル"
+    t.integer "category", null: false, comment: "購入したした物のカテゴリ"
+    t.datetime "purchased_at", null: false, comment: "購入したした日時"
+    t.text "description", comment: "備考"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "stores", charset: "utf8", force: :cascade do |t|
+    t.string "title", null: false, comment: "購入した店舗の名称"
+    t.string "description", comment: "備考"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", charset: "utf8", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "email", null: false
-    t.string "password_digest", null: false
-    t.boolean "activated", default: false, null: false
-    t.boolean "admin", default: false, null: false
+    t.string "name", null: false, comment: "氏名"
+    t.string "email", null: false, comment: "メールアドレス"
+    t.string "password_digest", null: false, comment: "パスワード"
+    t.string "description", comment: "備考"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

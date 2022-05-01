@@ -76,3 +76,8 @@ gem 'mysql2'
 gem 'jwt'
 gem 'simple_command'
 gem 'rack-cors', :require => 'rack/cors'
+
+gem 'bootstrap', '~> 5.0'
+gem 'html2slim'
+gem 'slim'
+gem "chartkick"
