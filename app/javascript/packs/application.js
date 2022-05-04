@@ -11,9 +11,13 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
-require("chartkick").use(require("highcharts"))
-require("chartkick")
-require("chart.js")
+
+
+import "chartkick/chart.js"
+// require("chartkick").use(require("highcharts"))
+// require("chartkick")
+// require("chart.js")
+// require("chartkick").use(require("chart.js"))
 
 Rails.start()
 Turbolinks.start()

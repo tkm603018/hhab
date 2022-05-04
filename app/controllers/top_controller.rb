@@ -27,7 +27,8 @@ class TopController < ApplicationController
       income = item.where(category: CATEGORIES.length-1).pluck(:price).sum
       outcome = item.where.not(category: CATEGORIES.length-1).pluck(:price).sum
       inoutcome = income - outcome
-      @column_chart_colors.append( inoutcome > 0 ? '#2979ff' : '#f50057')
+      @column_chart_colors.append( inoutcome > 0 ? "#2979ff" : "#f50057")
+      # @column_chart_colors.append( inoutcome > 0 ? "#aaa" : "#000")
       @dayly_total_price.append([day.day, inoutcome])
     }
 
