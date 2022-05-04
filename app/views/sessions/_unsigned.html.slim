@@ -1,9 +1,9 @@
-= form_for(:session, url: sessions_path, html: { class: 'mb-5 form-sign' }) do |f|
-  h2 class='fw-bold mb-3' ようこそ
-  div class='form-floating mb-3'
+= form_for(:session, url: sessions_path, html: { class: 'mb-5' }) do |f|
+  span class='fw-bold anim-text-flow mb-5' ようこそ
+  div class='form-floating mt-5 mb-3'
     = f.email_field :email, class: 'form-control', id: 'floatingInput', placeholder: 'Email', required: true
     = f.label 'Email', for: 'floatingInput'
   div class='form-floating mb-5'
     = f.password_field :password, class: 'form-control', id: 'floatingPassword', placeholder: 'Password', required: true
     = f.label :password, for: 'floatingPassword'
-  = f.submit 'サインインする', class: 'btn btn-lg btn-primary'
+  = f.submit 'ログインする', class: 'btn btn-lg btn-primary'

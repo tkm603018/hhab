@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-before_action :signed_in_user, only: [:new, :create]
+before_action :signed_in_user, only: [:edit, :new, :create, :update]
 helper_method :sort_column, :sort_direction
 
   def index
@@ -14,7 +14,7 @@ helper_method :sort_column, :sort_direction
     Item.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
   end
   
-  def show
+  def edit
     @item = Item.find(params[:id])
     @stores = Store.where(user_id: current_user.id)
     @stores = @stores.map{|store| store.title }.unshift('')

@@ -1,10 +1,17 @@
-div class='' style="padding-top: 10rem;"
-  - if signed_in?
-    div class='signed_in'
-      = render 'sessions/signed'
-
-  - else
-    div class='form-sign'
-      = render 'sessions/unsigned'
-      h2 class='fw-bold' 登録
-      div = link_to 'ユーザー登録へ', new_user_path, class: 'text-decoration-none'
+- if signed_in?
+  = render 'sessions/signed'
+  div class='px-5 pb-5'
+    div class='px-3 py-2 text-center'
+      = pie_chart @category_total_price, @pie_chart_params
+      h4 class='bold'
+        = @pie_chart_title
+    div class='px-3 py-2 text-center'
+      = column_chart @dayly_total_price, @column_chart_params
+      / = column_chart @days, suffix: "円", colors: @days_color, library: { legend: false }
+      h4 class='py-2'
+        = "今月(#{@last_month.year}年#{@last_month.month}月)の利用推移"
+      
+- else
+  div class='form-format1' style='padding-top: 7rem;'
+    = render 'sessions/unsigned'
+    div = link_to '新規ユーザー登録へ', new_user_path, class: 'text-decoration-none'

@@ -1,12 +1,5 @@
 class UsersController < ApplicationController
 
-  def index
-  end
-  def show
-  end
-  def new
-  end
-
   def create
     user = User.find_by(email: params[:user][:email])
     return redirect_to new_user_path, alert: '登録済です' if user
