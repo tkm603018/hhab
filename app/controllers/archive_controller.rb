@@ -3,7 +3,7 @@ class ArchiveController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-    @months = Item.where(user_id: current_user.id).pluck(:purchased_at).map{|a| a.strftime("%Y-%m")}.group_by(&:itself).transform_values(&:size).to_a
+    @months = Item.where(user_id: current_user.id).order("purchased_at desc").pluck(:purchased_at).map{|a| a.strftime("%Y-%m")}.group_by(&:itself).transform_values(&:size).to_a
   end
 
   def subindex

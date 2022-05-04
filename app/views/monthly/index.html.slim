@@ -2,6 +2,7 @@
   = render 'sessions/signed'
 
   div class='px-5'
+    h2 class='fw-bold pb-1' 毎月の料金推移
     div class='px-3 py-2 text-center'
       - if @utility_water.present?
         = line_chart @utility_water, suffix: "円", title: '毎月の水道利用料推移'

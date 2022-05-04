@@ -1,8 +1,0 @@
-- if signed_in?
-  = render 'sessions/signed'
-
-  div class='px-5'
-    div class='px-3 py-2 text-center'
-      = pie_chart @category_total_price, suffix: "円", colors: ["#f50057", "#ffc400", "#f44336", "#8bc34a", "#4caf50", "#00bcd4", "#2979ff", "#4caf50", "#dddddd"], title: "今月(#{Date.today.year}年#{Date.today.month}月)の利用割合"
-    div class='px-3 py-2 text-center'
-      = column_chart @days, suffix: "円", colors: @days_color, library: { legend: false }, title: "今月(#{Date.today.year}年#{Date.today.month}月)の利用推移"

@@ -1,14 +1,14 @@
 - if signed_in?
   = render 'sessions/signed'
 
-  div class='px-5 py-5'
+  div class='px-5'
     h2 class='fw-bold pt-4 pb-1' 購入品追加フォーム
 
-  = form_for(:item, url: '/items', html: { class: 'form-sign' }) do |f|
-    | 店舗名がない場合は▼に記入してください
+  = form_for(:item, url: '/items', html: { class: 'form-format1' }) do |f|
+    | 店舗名・用途がない場合は▼に記入してください
     div class='form-floating mb-4'
       = f.text_field :title, class: 'form-control', id: 'floatingInput1'
-      = f.label '店舗名', for: 'floatingInput1'
+      = f.label '店舗名・用途', for: 'floatingInput1'
       - if @stores.present?
         = f.select :store, @stores, {}, class: 'form-select', id: 'floatingSelect2'
     div class='form-floating mb-4'
