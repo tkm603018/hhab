@@ -5,6 +5,7 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.string :email, null: false, comment: 'メールアドレス'
       t.string :password_digest, null: false, comment: 'パスワード'
       t.string :description, comment: '備考'
+      t.integer :status, default: 0, comment: 'ユーザー情報公開ステータス'
 
       t.timestamps
     end

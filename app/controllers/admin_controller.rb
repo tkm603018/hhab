@@ -1,12 +1,9 @@
-class TopController < ApplicationController
-  helper_method :sort_column, :sort_direction
+class AdminController < ApplicationController
+  before_action :signed_in_user, only: [:new, :create]
 
   def index
-    @users = User.status_active.all
-  end
-
-  def show
-    @items = Item.where(user_id: params[:slug])
+    return nil unless current_user
+    @items = Item.where(user_id: current_user.id)
     @pie_chart_colors = []
     @category_total_price = []
     incomes_sum = 0
@@ -31,6 +28,7 @@ class TopController < ApplicationController
       outcome = item.where.not(category: CATEGORIES.length-1).pluck(:price).sum
       inoutcome = income - outcome
       @column_chart_colors.append( inoutcome > 0 ? "#2979ff" : "#f50057")
+      # @column_chart_colors.append( inoutcome > 0 ? "#aaa" : "#000")
       @dayly_total_price.append([day.day, inoutcome])
     }
 
@@ -75,30 +73,5 @@ class TopController < ApplicationController
       suffix: '円',
       colors: @column_chart_colors,
     }
-
-    @user = User.status_active.find(params[:slug])
-    @utility_water = utility(@user, '水道代')
-    @utility_gas = utility(@user, 'ガス代')
-  end
-
-  def months
-    @months = Item.where(user_id: params[:slug]).order("purchased_at desc").pluck(:purchased_at).map{|a| a.strftime("%Y-%m")}.group_by(&:itself).transform_values(&:size).to_a
-    @user = User.status_active.find(params[:slug])
-  end
-
-  def items
-    @user = User.status_active.find(params[:slug])
-    @items = Item.where(user_id: params[:slug])
-    d = Date.parse("#{params[:month]}-01").all_month
-    @items = @items.where(purchased_at: d.map{|a|a.all_day})
-    @items = @items.order("#{sort_column} #{sort_direction}")
-  end
-
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
-  end
-
-  def sort_column
-    Item.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
   end
 end
