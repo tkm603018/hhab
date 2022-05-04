@@ -14,7 +14,6 @@ class TopController < ApplicationController
         @pie_chart_colors.append(CATEGORIES_COLORS[i]) 
         @category_total_price.append([CATEGORIES[i], items_sum])
       end
-      # [CATEGORIES[i], @items.where(category: i).pluck(:price).sum]
     }
     @last_month = Date.today.months_ago(1)
     days = @last_month.all_month
@@ -31,7 +30,6 @@ class TopController < ApplicationController
       @column_chart_colors.append( inoutcome > 0 ? '#2979ff' : '#f50057')
       @dayly_total_price.append([day.day, inoutcome])
     }
-    # @days_color = @dayly_total_price.map{|x| x[1] > 0 ? '#2979ff' : '#f50057' }
 
     @pie_chart_params = {
       donut: true,
