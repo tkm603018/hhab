@@ -1,0 +1,36 @@
+= render 'header'
+
+div class='px-5 pt-1 pb-1'
+  nav aria-label="breadcrumb" 
+    ol.breadcrumb
+      li.breadcrumb-item
+        = link_to 'ユーザーレポート', "/#{params[:slug]}/"
+      li.breadcrumb-item.active aria-current="page"
+        = link_to '毎月の記録一覧', "/#{params[:slug]}/months"
+      li.breadcrumb-item.active aria-current="page" 購入品リスト
+
+div class='px-5 pt-1 pb-1'
+  h2 class='fw-bold pb-1' 購入品リスト
+  - if @items.present?
+    table class='table text-center table-striped'
+      thread
+        tr
+          th scope='col' 名称
+          th scope='col' カテゴリ
+          th scope='col'
+            = sort_order "price", "価格"
+          th scope='col'
+            = sort_order "purchased_at", "購入日"
+          th scope='col' 説明
+          th scope='col'
+            = sort_order "created_at", "作成日"
+
+      tbody
+        - @items.map do |item| 
+          tr
+            td = item.store.title
+            td = categories[item.category]
+            td = item.price
+            td = l(item.purchased_at, format: :format2)
+            td = item.description 
+            td = l(item.created_at, format: :format3)

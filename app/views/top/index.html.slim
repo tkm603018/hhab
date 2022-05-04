@@ -1,16 +1,18 @@
-- if signed_in?
-  = render 'sessions/signed'
-  div class='px-5 pb-5'
-    div class='px-3 py-2 text-center'
-      = pie_chart @category_total_price, @pie_chart_params
-      h5 class='py-2'
-        = @pie_chart_title
-    div class='px-3 py-2 text-center' style="font-size: 20px;"
-      = column_chart @dayly_total_price, @column_chart_params
-      h5 class='py-2'
-        = "今月(#{@last_month.year}年#{@last_month.month}月)の利用推移"
-      
-- else
-  div class='form-format1' style='padding-top: 7rem;'
-    = render 'sessions/unsigned'
-    div = link_to '新規ユーザー登録へ', new_user_path, class: 'text-decoration-none'
+= render 'header'
+
+div class='px-5 pt-1 pb-1'
+  h2 class='fw-bold pb-1' ユーザー一覧
+  - if @users.present?
+    table class='table text-center table-striped'
+      thread
+        tr
+          th scope='col' id
+          th scope='col' 名前
+          th scope='col' 詳細ページへのリンク
+
+      tbody
+        - @users.map do |user|
+          tr
+            td = user.id
+            td = user.name
+            td = link_to "詳細ページへ", "/#{user.id}", class: 'text-decoration-none'

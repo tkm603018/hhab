@@ -12,9 +12,9 @@ class UsersController < ApplicationController
     )
     if user.valid?
       user.save
-      redirect_to root_path, notice: '登録しました'
+      redirect_to admin_path, notice: '登録しました'
     else
-      redirect_to root_path, alert: user.errors.messages
+      redirect_to admin_path, alert: user.errors.messages
     end
   end
 
@@ -29,6 +29,6 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.permit(:name, :description)
+    params.permit(:name, :description, :status)
   end
 end

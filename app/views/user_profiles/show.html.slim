@@ -3,25 +3,33 @@
 
   div class='mx-5'
     h2 class='fw-bold pb-1' プロフィール
-    - if current_user.present?
-      = form_with(url: user_path(current_user), method: :put, html: { class: 'd-grid'}) do |f|
+    - if @profile.present?
+      = form_with(url: user_path(@profile), method: :put, html: { class: 'd-grid'}) do |f|
         table class='table'
           tr
             th class='text-center' ID
-            td = current_user.id
+            td = @profile.id
           tr
             th class='text-center' Email
-            td = current_user.email
+            td = @profile.email
           tr
             th class='text-center' 氏名
             td
               div class='form-control me-2 w-100'
-                = f.text_field :name, value: current_user.name, class: 'form-control', required: true
+                = f.text_field :name, value: @profile.name, class: 'form-control', required: true
           tr
             th class='text-center' 備考
             td 
               div class='form-control me-2 w-100'
-                = f.text_area :description, value: current_user.description, class: 'form-control'
+                = f.text_area :description, value: @profile.description, class: 'form-control'
+          tr
+            th class='text-center' 公開設定
+            td 
+              div class='form-control me-2 w-100'
+                = f.radio_button :status, 'active', class: 'form-check-input px-1', checked: @profile.status_active?
+                = f.label '公開する', class: 'form-check-label px-1'
+                = f.radio_button :status, 'inactive', class: 'form-check-input px-1', checked: @profile.status_inactive?
+                = f.label '非公開にする', class: 'form-check-label px-1'
         = f.submit '変更', class: 'btn btn-outline-primary', style: "margin-inline-start: auto; width: 30%;"
 - else
   div class='navbar navbar-expand-lg navbar-light bg-light p-3 px-md-4 mb-3'

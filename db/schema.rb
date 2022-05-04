@@ -12,15 +12,6 @@
 
 ActiveRecord::Schema.define(version: 2022_04_29_192302) do
 
-  create_table "expenses", charset: "utf8", force: :cascade do |t|
-    t.bigint "user_id", comment: "ユーザーのid"
-    t.string "title", null: false, comment: "購入店舗"
-    t.date "purchased_at", null: false, comment: "購入日"
-    t.integer "price", null: false, comment: "購入金額"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "items", charset: "utf8", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "userテーブルのid"
     t.bigint "store_id", null: false, comment: "storeテーブルのid"
@@ -45,6 +36,7 @@ ActiveRecord::Schema.define(version: 2022_04_29_192302) do
     t.string "email", null: false, comment: "メールアドレス"
     t.string "password_digest", null: false, comment: "パスワード"
     t.string "description", comment: "備考"
+    t.integer "status", default: 0, comment: "ユーザー情報公開ステータス"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
