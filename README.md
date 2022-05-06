@@ -47,4 +47,3 @@ heroku run rake db:seed
 ```
 heroku logs -t
 ```
-```
