@@ -23,7 +23,7 @@ class ArchiveController < ApplicationController
         @category_total_price.append([CATEGORIES[i], items_sum])
       end
     }
-    @pie_chart_title = "#{@date.year}年#{@date.month}月の利用割合"
+    @charts_title = "#{@last_month.year}年#{@last_month.month}月の結果"
     
     @column_chart_colors = []
     @dayly_total_price = []

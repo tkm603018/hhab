@@ -17,7 +17,7 @@ class AdminController < ApplicationController
       end
     }
     days = @last_month.all_month
-    @pie_chart_title = "今月(#{@last_month.year}年#{@last_month.month}月)の利用割合"
+    @charts_title = "今月(#{@last_month.year}年#{@last_month.month}月)の結果"
     
     @column_chart_colors = []
     @dayly_total_price = []

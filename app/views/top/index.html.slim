@@ -4,16 +4,17 @@ div class='px-5 pt-1 pb-1'
   h2 class='fw-bold pb-1' 家計簿一覧
   | 現在家計簿を公開しているユーザーの一覧です。
   - if @users.present?
-    table class='table text-center table-striped'
-      thread
-        tr
-          th scope='col' id
-          th scope='col' 名前
-          th scope='col' ページリンク
-
-      tbody
-        - @users.map do |user|
+    div style='overflow-x: scroll;'
+      table class='table text-center table-striped'
+        thread
           tr
-            td = user.id
-            td = user.name
-            td = link_to "家計簿ページへ", "/#{user.id}", class: 'text-decoration-none'
+            th scope='col' id
+            th scope='col' 名前
+            th scope='col' ページリンク
+
+        tbody
+          - @users.map do |user|
+            tr
+              td = user.id
+              td = user.name
+              td = link_to "家計簿ページへ", "/#{user.id}", class: 'text-decoration-none'
