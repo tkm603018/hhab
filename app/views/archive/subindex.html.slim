@@ -1,11 +1,20 @@
 - if signed_in?
   = render 'sessions/signed'
+  div class='px-5 pb-5'
+    div class='px-3 py-2 text-center'
+      = pie_chart @category_total_price, @pie_chart_params
+      h5 class='py-2'
+        = @pie_chart_title
+    div class='px-3 py-2 text-center' style="font-size: 20px;"
+      = column_chart @dayly_total_price, @column_chart_params
+      h5 class='py-2'
+        = @pie_chart_title
 
   div class='px-5 py-5'
     h2 class='fw-bold pb-1'
       = "#{params[:slug]}の購入品一覧"
-    - if @items.present?
-      table class='table text-center table-striped'
+    - if @list_items.present?
+      table id='items_table' class='table text-center table-striped'
         thread
           tr
             th scope='col' 編集
@@ -21,7 +30,7 @@
             th scope='col' 削除
 
         tbody
-          - @items.map do |item| 
+          - @list_items.map do |item| 
             tr
               td = link_to item.id, edit_item_path(item), class: 'text-decoration-none'
               td = item.store.title

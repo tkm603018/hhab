@@ -4,7 +4,7 @@
   div class='px-5'
     h2 class='fw-bold pb-1' 購入品一覧
     - if @items.present?
-      table class='table text-center table-striped'
+      table id='items_table' class='table text-center table-striped'
         thread
           tr
             th scope='col' 編集
