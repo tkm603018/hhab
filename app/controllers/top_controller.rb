@@ -20,7 +20,7 @@ class TopController < ApplicationController
       end
     }
     days = @last_month.all_month
-    @pie_chart_title = "今月(#{@last_month.year}年#{@last_month.month}月)の利用割合"
+    @charts_title = "今月(#{@last_month.year}年#{@last_month.month}月)の結果"
 
     
     @column_chart_colors = []
@@ -104,7 +104,7 @@ class TopController < ApplicationController
         @category_total_price.append([CATEGORIES[i], items_sum])
       end
     }
-    @pie_chart_title = "今月(#{@date.year}年#{@date.month}月)の利用割合"
+    @charts_title = "#{@date.year}年#{@date.month}月の結果"
     
     @column_chart_colors = []
     @dayly_total_price = []

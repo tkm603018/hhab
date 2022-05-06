@@ -10,37 +10,37 @@ div class='px-5 pt-1 pb-1'
       li.breadcrumb-item.active aria-current="page" 購入品リスト
 
 div class='px-5 pb-5'
+  h2 class='fw-bold pb-1' = @charts_title
   div class='px-3 py-2 text-center'
     = pie_chart @category_total_price, @pie_chart_params
-    h5 class='py-2'
-      = @pie_chart_title
+    h5 class='py-2' 利用割合
   div class='px-3 py-2 text-center' style="font-size: 20px;"
     = column_chart @dayly_total_price, @column_chart_params
-    h5 class='py-2'
-      = @pie_chart_title
+    h5 class='py-2' 利用推移
 
 div class='px-5 pt-1 pb-1'
   h2 class='fw-bold pb-1' = "購入品リスト #{@date_title}"
   - if @items.present?
-    table id='items_table' class='table text-center table-striped'
-      thread
-        tr
-          th scope='col' 名称
-          th scope='col' カテゴリ
-          th scope='col'
-            = sort_order "price", "価格"
-          th scope='col'
-            = sort_order "purchased_at", "購入日"
-          th scope='col' 説明
-          th scope='col'
-            = sort_order "created_at", "作成日"
-
-      tbody
-        - @items.map do |item| 
+    div style='overflow-x: scroll;'
+      table id='items_table' class='table text-center table-striped'
+        thread
           tr
-            td = item.store.title
-            td = categories[item.category]
-            td = item.price
-            td = l(item.purchased_at, format: :format2)
-            td = item.description 
-            td = l(item.created_at, format: :format3)
+            th scope='col' 名称
+            th scope='col' カテゴリ
+            th scope='col'
+              = sort_order "price", "価格"
+            th scope='col'
+              = sort_order "purchased_at", "購入日"
+            th scope='col' 説明
+            th scope='col'
+              = sort_order "created_at", "作成日"
+
+        tbody
+          - @items.map do |item| 
+            tr
+              td = item.store.title
+              td = categories[item.category]
+              td = item.price
+              td = l(item.purchased_at, format: :format2)
+              td = item.description 
+              td = l(item.created_at, format: :format3)
