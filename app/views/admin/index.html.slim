@@ -8,7 +8,7 @@
     div class='px-3 py-2 text-center' style="font-size: 20px;"
       = column_chart @dayly_total_price, @column_chart_params
       h5 class='py-2'
-        = "今月(#{@last_month.year}年#{@last_month.month}月)の利用推移"
+        = @pie_chart_title
       
 - else
   div class='form-format1' style='padding-top: 7rem;'

@@ -3,22 +3,21 @@ class AdminController < ApplicationController
 
   def index
     return nil unless current_user
-    @items = Item.where(user_id: current_user.id)
+    @items = current_user.items
     @pie_chart_colors = []
     @category_total_price = []
+    @last_month = Date.today.months_ago(1)
     incomes_sum = 0
     [*0..8].each{|i|
-      items_sum = @items.where(category: i).pluck(:price).sum
+      items_sum = @items.where(purchased_at: @last_month.all_month, category: i).pluck(:price).sum
       if 0 < items_sum && i != 8
         incomes_sum = incomes_sum + items_sum
         @pie_chart_colors.append(CATEGORIES_COLORS[i]) 
         @category_total_price.append([CATEGORIES[i], items_sum])
       end
     }
-    @last_month = Date.today.months_ago(1)
     days = @last_month.all_month
     @pie_chart_title = "今月(#{@last_month.year}年#{@last_month.month}月)の利用割合"
-
     
     @column_chart_colors = []
     @dayly_total_price = []
@@ -28,7 +27,6 @@ class AdminController < ApplicationController
       outcome = item.where.not(category: CATEGORIES.length-1).pluck(:price).sum
       inoutcome = income - outcome
       @column_chart_colors.append( inoutcome > 0 ? "#2979ff" : "#f50057")
-      # @column_chart_colors.append( inoutcome > 0 ? "#aaa" : "#000")
       @dayly_total_price.append([day.day, inoutcome])
     }
 
