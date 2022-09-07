@@ -2,7 +2,7 @@
   = render 'sessions/signed'
 
   div class='px-5'
-    h2 class='fw-bold pt-4 pb-1' 購入品編集フォーム
+    h2 class='fw-bold pt-4 pb-1' 編集フォーム
 
   = form_for(:item, url: item_path(params[:id]), method: :put, html: { class: 'form-format1' }) do |f|
     | 店舗名・用途がない場合は▼に記入してください
