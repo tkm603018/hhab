@@ -1,5 +1,5 @@
 current directory: /Users/tkm/deliverables/rails/hhab/vendor/bundle/ruby/2.5.0/gems/sassc-2.4.0/ext
-/Users/tkm/.rbenv/versions/2.5.1/bin/ruby -I /Users/tkm/.rbenv/versions/2.5.1/lib/ruby/site_ruby/2.5.0 -r ./siteconf20210910-39897-rznt29.rb extconf.rb
+/Users/tkm/.rbenv/versions/2.5.1/bin/ruby -I /Users/tkm/.rbenv/versions/2.5.1/lib/ruby/site_ruby/2.5.0 -r ./siteconf20220910-87771-12cww7s.rb extconf.rb
 creating Makefile
 
 current directory: /Users/tkm/deliverables/rails/hhab/vendor/bundle/ruby/2.5.0/gems/sassc-2.4.0/ext
@@ -77,4 +77,4 @@ linking shared-object sassc/libsass.bundle
 
 current directory: /Users/tkm/deliverables/rails/hhab/vendor/bundle/ruby/2.5.0/gems/sassc-2.4.0/ext
 make DESTDIR\= install
-/usr/bin/install -c -m 0755 libsass.bundle ./.gem.20210910-39897-1tk818n/sassc
+/usr/bin/install -c -m 0755 libsass.bundle ./.gem.20220910-87771-mtzv5r/sassc
