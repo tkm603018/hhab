@@ -6,7 +6,7 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Hhab
+module Hhab2
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
@@ -18,14 +18,7 @@ module Hhab
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-    
-    # config.middleware.use Rack::Cors do
-    #   allow do
-    #     origins '*'
-    #     resource '*', :headers => :any, :methods => [:get, :post, :delete, :put, :options]
-    #   end
-    # end
     config.time_zone = "Tokyo"
-    config.i18n.default_locale = :ja
+    # config.i18n.default_locale = :ja
   end
 end
