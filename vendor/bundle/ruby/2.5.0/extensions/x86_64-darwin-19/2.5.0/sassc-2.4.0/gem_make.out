@@ -1,11 +1,11 @@
-current directory: /Users/tkm/deliverables/rails/hhab2/vendor/bundle/ruby/2.5.0/gems/sassc-2.4.0/ext
-/Users/tkm/.rbenv/versions/2.5.1/bin/ruby -I /Users/tkm/.rbenv/versions/2.5.1/lib/ruby/site_ruby/2.5.0 -r ./siteconf20220909-89129-hmbzy0.rb extconf.rb
+current directory: /Users/tkm/deliverables/rails/hhab/vendor/bundle/ruby/2.5.0/gems/sassc-2.4.0/ext
+/Users/tkm/.rbenv/versions/2.5.1/bin/ruby -I /Users/tkm/.rbenv/versions/2.5.1/lib/ruby/site_ruby/2.5.0 -r ./siteconf20220910-87771-12cww7s.rb extconf.rb
 creating Makefile
 
-current directory: /Users/tkm/deliverables/rails/hhab2/vendor/bundle/ruby/2.5.0/gems/sassc-2.4.0/ext
+current directory: /Users/tkm/deliverables/rails/hhab/vendor/bundle/ruby/2.5.0/gems/sassc-2.4.0/ext
 make DESTDIR\= clean
 
-current directory: /Users/tkm/deliverables/rails/hhab2/vendor/bundle/ruby/2.5.0/gems/sassc-2.4.0/ext
+current directory: /Users/tkm/deliverables/rails/hhab/vendor/bundle/ruby/2.5.0/gems/sassc-2.4.0/ext
 make DESTDIR\=
 compiling ./libsass/src/ast.cpp
 compiling ./libsass/src/ast2c.cpp
@@ -75,6 +75,6 @@ compiling ./libsass/src/util_string.cpp
 compiling ./libsass/src/values.cpp
 linking shared-object sassc/libsass.bundle
 
-current directory: /Users/tkm/deliverables/rails/hhab2/vendor/bundle/ruby/2.5.0/gems/sassc-2.4.0/ext
+current directory: /Users/tkm/deliverables/rails/hhab/vendor/bundle/ruby/2.5.0/gems/sassc-2.4.0/ext
 make DESTDIR\= install
-/usr/bin/install -c -m 0755 libsass.bundle ./.gem.20220909-89129-1dew5y1/sassc
+/usr/bin/install -c -m 0755 libsass.bundle ./.gem.20220910-87771-mtzv5r/sassc
