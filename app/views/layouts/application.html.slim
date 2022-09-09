@@ -1,20 +1,18 @@
 doctype html
-html lang="ja"
+html
   head
     title
-      | Hhab
-    meta content="最低限必要な機能をそろえた家計簿アプリです。" name="description" /
+      | Hhab2
     meta[name="viewport" content="width=device-width,initial-scale=1"]
     = csrf_meta_tags
     = csp_meta_tag
-    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
-    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
-    / script src="https://code.highcharts.com/highcharts.js" 
-    / script src="https://code.highcharts.com/modules/annotations.js" 
+    / = stylesheet_link_tag 'application', media: 'all'
+    / = javascript_pack_tag 'application'
+    / = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = stylesheet_link_tag 'application', media: 'all'
+    / = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application'
+    = stylesheet_pack_tag 'application', media: 'all'
 
   body
-    - if notice
-      div class='alert alert-success text-center' = notice
-    - if alert
-      div class='alert alert-danger text-center' = alert
     = yield

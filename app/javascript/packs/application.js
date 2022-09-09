@@ -7,18 +7,13 @@
 //= require Chart.bundle
 
 import Rails from "@rails/ujs"
-import Turbolinks from "turbolinks"
+// import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
-
-
-
 import "chartkick/chart.js"
-// require("chartkick").use(require("highcharts"))
-// require("chartkick")
-// require("chart.js")
-// require("chartkick").use(require("chart.js"))
+import "bootstrap";
+import "../stylesheets/application.scss"
 
 Rails.start()
-Turbolinks.start()
+// Turbolinks.start()
 ActiveStorage.start()

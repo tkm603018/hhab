@@ -1,0 +1,1 @@
+["--host=x86_64-apple-darwin21.6.0", "--enable-static", "--disable-shared", "--enable-shared=no", "--enable-static=yes", "CC=clang", "CFLAGS=-fPIC -O2", "--prefix=/Users/tkm/deliverables/rails/hhab2/vendor/bundle/ruby/2.5.0/gems/sqlite3-1.5.0/ports/x86_64-apple-darwin21.6.0/sqlite3/3.39.3"]
