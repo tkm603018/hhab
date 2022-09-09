@@ -80,4 +80,6 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'html2slim'
 gem 'slim'
 gem 'bootstrap', '~> 5.0'
-gem "chartkick"
+gem 'chartkick'
+gem 'sassc', '< 2.2.0'
+gem 'activesupport'

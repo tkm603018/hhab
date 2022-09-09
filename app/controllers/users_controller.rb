@@ -2,26 +2,31 @@ class UsersController < ApplicationController
   protect_from_forgery
 
   def create
-    user = User.find_by(email: params[:user][:email])
-    return redirect_to new_user_path, alert: '登録済です' if user
+    @user = User.find_by(email: params[:user][:email])
+    return redirect_to new_user_path, alert: '登録済です' if @user
     
-    user = User.new(
+    @user = User.new(
       email: params[:user][:email],
       password: params[:user][:password],
       password_confirmation: params[:user][:password_confirmation],
       name: params[:user][:name]
     )
-    if user.valid?
-      user.save
-      redirect_to admin_path, notice: '登録しました'
+    if @user.valid?
+      if @user.save
+        @user.send_activation_email
+        flash[:info] = "Please check your email to activate your account."
+        redirect_to admin_path, notice: '登録しました'
+      else
+        render 'new'
+      end
     else
-      redirect_to admin_path, alert: user.errors.messages
+      redirect_to admin_path, alert: @user.errors.messages
     end
   end
 
   def update
-    user = User.find(params[:id])
-    if user&.update(user_params)
+    @user = User.find(params[:id])
+    if @user&.update(user_params)
       redirect_to request.referer, notice: 'プロフィールを変更しました'
     else
       redirect_to request.referer, alert: 'プロフィールを変更できませんでした 文字制限を確認してください'

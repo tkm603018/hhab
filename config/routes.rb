@@ -11,10 +11,14 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create, :update]
   resources :sessions, only: [:create, :destroy]
   resource :user_profile, only: [:show]
+  resources :account_activations, only: [:edit]
+  resources :password_resets, only: [:new, :create, :edit, :update]
 
 
   root :to => 'top#index'
   get '/:slug', to: 'top#show'
   get '/:slug/months', to: 'top#months'
   get '/:slug/months/:month', to: 'top#items'
+
+  # mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 end
