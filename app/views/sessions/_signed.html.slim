@@ -1,8 +1,15 @@
 div class='navbar navbar-expand-lg navbar-light bg-light p-3 px-md-4 mb-3'
   div class='container-fluid'
-    div class='navbar-brand fs-2 fw-bold'
-      = link_to 'ホーム', admin_path, class: 'text-decoration-none text-dark'
+    div class='navbar-brand' style='font-weight: bold; display: inline-grid;'
+      = link_to 'HHAB', root_path, class: 'text-decoration-none anim-text-flow2'
+      span style='font-weight: bold; margin-top: -1rem; font-size: 0.8rem;'
+        = 'house hold account book'
     div class='navbar-item'
+      span class='p-3'
+        = link_to admin_url, id: 'tooltipButton', style: 'opacity: 1; text-decoration: none;' do
+          span id='toolTip' data-bs-toggle="tooltip" data-bs-placement="top" style='opacity: 0; font-size: 0.8rem; position: absolute; display: flex; top: 0.8rem'
+            | 管理画面へ
+          i.bi.fs-4.bi-box-arrow-up-right
       span class='p-3'
         = link_to 'プロフィールへ', user_profile_path, class: 'text-decoration-none text-dark'
       span class='p-3'
@@ -20,3 +27,18 @@ div class='px-5 pt-1 pb-1'
       = link_to '毎月の推移 >', monthly_path, class: 'text-decoration-none text-dark'
     li class='nav-item mb-3'
       = link_to '< 戻る', request.referer, class: 'text-decoration-none text-dark'
+
+javascript:
+  const target = document.getElementById("tooltipButton");
+  const popup = document.getElementById("toolTip");
+
+  // ボタンにhoverした時
+  target.addEventListener('mouseover', () => {
+    popup.style.opacity = '1';
+    popup.style.color = 'black';
+  }, false);
+
+  // ボタンから離れた時
+  target.addEventListener('mouseleave', () => {
+    popup.style.opacity = '0';
+  }, false);

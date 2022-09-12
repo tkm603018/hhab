@@ -1,0 +1,16 @@
+= render '/header'
+
+div class='form-format1' style='padding-top: 7rem;'
+  - provide(:title, 'パスワードリセット')
+  = form_with(url: password_reset_path(params[:id]), method: :put) do |f|
+    / = render 'shared/error_messages'
+    h2 パスワードリセット
+    = hidden_field_tag :email, @user.email
+    = hidden_field_tag :token, params[:token]
+    div class='form-floating mt-5 mb-3'
+      = f.password_field :password, class: 'form-control', id: 'floatingInput', placeholder: 'Password'
+      = f.label :password, for: 'floatingInput'
+    div class='form-floating mt-5 mb-3'
+      = f.password_field :password_confirmation, class: 'form-control', id: 'floatingInput', placeholder: 'Password Confirmation'
+      = f.label :password_confirmation, for: 'floatingInput'
+    = f.submit "パスワードをリセットする", class: "btn btn-primary"

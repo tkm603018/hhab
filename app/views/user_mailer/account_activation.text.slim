@@ -1,3 +1,4 @@
-| UserMailer#account_activation 
-= @greeting
-| , find me in app/views/user_mailer/account_activation.text.erb
+| こんにちは
+= @user.name
+下のリンクをクリックして、アカウントを有効化してください:
+= edit_account_activation_url(host: Rails.application.config.action_mailer.default_url_options[:host], email: @user.email, id: @user.id, token: @user.activation_token)

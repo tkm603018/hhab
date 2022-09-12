@@ -5,6 +5,7 @@
 
 //= require chartkick
 //= require Chart.bundle
+//= require jquery
 
 import Rails from "@rails/ujs"
 // import Turbolinks from "turbolinks"

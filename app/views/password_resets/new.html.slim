@@ -1,3 +1,5 @@
+= render '/header'
+
 div class='form-format1' style='padding-top: 7rem;'
   - provide(:title, "Forgot password")
   = form_for(:password_reset, url: password_resets_path) do |f|
