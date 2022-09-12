@@ -40,6 +40,8 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  config.action_mailer.default_url_options = (ENV['SITE_ORIGIN'].presence || 'http://localhost:3000').split('://').zip([:protocol, :host]).to_h.invert
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 

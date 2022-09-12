@@ -5,11 +5,12 @@
     div class='px-3 py-2 text-center'
       = pie_chart @category_total_price, @pie_chart_params
       h5 class='py-2' 利用割合
-    div class='px-3 py-2 text-center' style="font-size: 20px;"
+    div class='px-3 py-2 text-center' style='font-size: 20px;'
       = column_chart @dayly_total_price, @column_chart_params
       h5 class='py-2' 利用推移
-      
+
 - else
-  div class='form-format1' style='padding-top: 7rem;'
+  = render '/header'
+  div class='form-format1' style='padding-top: 3rem;'
     = render 'sessions/unsigned'
     div = link_to '新規ユーザー登録へ', new_user_path, class: 'text-decoration-none'

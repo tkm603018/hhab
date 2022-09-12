@@ -1,7 +1,9 @@
-div class='navbar navbar-expand-lg navbar-light bg-light p-3 px-md-4 mb-3'
-  div class='container-fluid'
-    div class='navbar-brand fs-2 fw-bold' 
-      = link_to 'ホーム', admin_path, class: 'text-decoration-none'
+/ div class='navbar navbar-expand-lg navbar-light bg-light p-3 px-md-4 mb-3'
+/   div class='container-fluid'
+/     div class='navbar-brand fs-2 fw-bold' 
+/       = link_to 'ホーム', admin_path, class: 'text-decoration-none'
+
+= render '/header'
 
 div class='px-5 pt-1 pb-1'
   = form_for(:user, url: users_path, html: { class: 'form-format1' }) do |f|
@@ -12,10 +14,36 @@ div class='px-5 pt-1 pb-1'
     div class='form-floating mb-3'
       = f.email_field :email, class: 'form-control', id: 'floatingInput', placeholder: 'Email', required: true
       = f.label 'Email', for: 'floatingInput'
-    div class='form-floating mb-3'
+    div class='form-floating mb-3' style='display: flex; align-items: center;'
       = f.password_field :password, class: 'form-control', id: 'floatingPassword', placeholder: 'Password', required: true
       = f.label :password, for: 'floatingPassword'
-    div class='form-floating mb-5'
+      span id='buttonEye1' class='bi bi-eye-fill px-2' name='icon' style='font-size: 1rem; position: absolute; right: 0.7rem;' onClick='handleClick1()'
+    div class='form-floating mb-5' style='display: flex; align-items: center;'
       = f.password_field :password_confirmation, class: 'form-control', id: 'floatingPasswordConfirmation', placeholder: 'PasswordConfirmation', required: true
       = f.label :password_confirmation, for: 'floatingPasswordConfirmation'
+      span id='buttonEye2' class='bi bi-eye-fill px-2' name='icon' style='font-size: 1rem; position: absolute; right: 0.7rem;' onClick='handleClick2()'
     = f.submit '登録する', class: 'btn btn-lg btn-primary'
+
+  javascript:
+    const handleClick1 = () => {
+      const txtPass1 = document.getElementById("floatingPassword");
+      const btnEye1 = document.getElementById("buttonEye1");
+      if (txtPass1.type === "text") {
+        txtPass1.type = "password";
+        btnEye1.className = "bi bi-eye-fill px-2";
+      } else {
+        txtPass1.type = "text";
+        btnEye1.className = "bi bi-eye-slash-fill px-2";
+      }
+    }
+    const handleClick2 = () => {
+      const txtPass2 = document.getElementById("floatingPasswordConfirmation");
+      const btnEye2 = document.getElementById("buttonEye2");
+      if (txtPass2.type === "text") {
+        txtPass2.type = "password";
+        btnEye2.className = "bi bi-eye-fill px-2";
+      } else {
+        txtPass2.type = "text";
+        btnEye2.className = "bi bi-eye-slash-fill px-2";
+      }
+    }

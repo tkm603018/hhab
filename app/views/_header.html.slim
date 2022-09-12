@@ -1,0 +1,27 @@
+div class='navbar navbar-expand-lg p-3 px-md-4'
+  div class='container-fluid'
+    div class='navbar-brand' style='font-weight: bold; display: inline-grid;'
+      = link_to 'HHAB', root_path, class: 'text-decoration-none anim-text-flow2'
+      span style='font-weight: bold; margin-top: -1rem; font-size: 0.8rem;'
+        = 'house hold account book'
+
+    = link_to admin_url, id: 'tooltipButton', style: 'display: grid; text-align: center; opacity: 1; text-decoration: none;' do
+      span id='toolTip' data-bs-toggle="tooltip" data-bs-placement="top" style='opacity: 0; font-size: 0.8rem;'
+        | 管理画面へ
+      i.bi.fs-4.bi-box-arrow-up-right
+
+javascript:
+  const target = document.getElementById("tooltipButton");
+  const popup = document.getElementById("toolTip");
+
+  // ボタンにhoverした時
+  target.addEventListener('mouseover', () => {
+    popup.style.opacity = '1';
+    popup.style.color = 'black';
+  }, false);
+
+  // ボタンから離れた時
+  target.addEventListener('mouseleave', () => {
+    popup.style.opacity = '0';
+  }, false);
+
