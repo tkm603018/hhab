@@ -3,6 +3,11 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  production_credentials_key = Rails.root.join('config', 'credentials', 'production.key')
+  production_credentials_content = Rails.root.join('config', 'credentials', 'production.yml.enc')
+  config.credentials.key_path = production_credentials_key
+  config.credentials.content_path = production_credentials_content
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 
@@ -50,7 +55,7 @@ Rails.application.configure do
 
   # Include generic and useful information about system operation, but avoid logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII).
-  config.log_level = :info
+  config.log_level = :warn
 
   # Prepend all log lines with the following tags.
   config.log_tags = [ :request_id ]
@@ -66,7 +71,20 @@ Rails.application.configure do
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
+  
+  config.action_mailer.delivery_method       = :smtp
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_deliveries    = true
+  config.action_mailer.default_url_options   = ENV['SITE_ORIGIN'].split('://').zip([:protocol, :host]).to_h.invert
+  config.action_mailer.smtp_settings = {
+    port:                 587,
+    address:              'smtp.gmail.com',
+    domain:               'gmail.com',
+    user_name:            ENV['YOUR_EMAIL_ADDRESS'],
+    password:             ENV['YOUR_EMAIL_PASSWORD'],
+    authentication:       'login',
+    enable_starttls_auto: true
+  }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).

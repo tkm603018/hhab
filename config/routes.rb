@@ -23,5 +23,4 @@ Rails.application.routes.draw do
   get '/:slug/months', to: 'top#months'
   get '/:slug/months/:month', to: 'top#items'
 
-  # mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 end
