@@ -51,8 +51,6 @@ class PasswordResetsController < ApplicationController
 
     # 正しいユーザーかどうか確認する
     def valid_user
-      p @user.authenticated?(:reset, params[:token])
-      p @user && @user.activated? && @user.authenticated?(:reset, params[:token])
       unless (@user && @user.activated? && @user.authenticated?(:reset, params[:token]))
         redirect_to admin_url
       end
