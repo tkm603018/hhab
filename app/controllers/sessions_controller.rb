@@ -3,9 +3,12 @@ class SessionsController < ApplicationController
   
   def create
     user = User.find_by(email: params[:session][:email])
-    if user && user.authenticate(params[:session][:password])
+    auth = user.authenticate(params[:session][:password])
+    if user && auth
       sign_in user
       redirect_to admin_path, notice: 'サインイン中'
+    elsif user && !auth
+      redirect_to admin_path, alert: 'パスワードが間違っています'
     else
       redirect_to admin_path, alert: '未登録です'
     end
