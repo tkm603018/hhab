@@ -18,10 +18,12 @@ protect_from_forgery
   def edit
     @item = current_user.items.find(params[:id])
     gon.site_url = ENV['SITE_ORIGIN'].presence || 'http://localhost:3000'
+    @categories = current_user.categories.published.select(:title, :path)
   end
 
   def new
     gon.site_url = ENV['SITE_ORIGIN'].presence || 'http://localhost:3000'
+    @categories = current_user.categories.published.select(:title, :path)
   end
 
   def create
@@ -31,7 +33,7 @@ protect_from_forgery
     current_user.items.create!(
       store_title: item_params[:title] || '', 
       purchased_at: params_date,
-      category: CATEGORIES.index(item_params[:category]), 
+      category_path: item_params[:category_path], 
       price: item_params[:price], 
       description: item_params[:description]
     )
@@ -46,7 +48,7 @@ protect_from_forgery
       current_user.items.find(params[:id]).update(
         store_title: item_params[:title], 
         purchased_at: params_date,
-        category: CATEGORIES.index(item_params[:category]), 
+        category_path: item_params[:category_path], 
         price: item_params[:price], 
         description: item_params[:description]
       )
@@ -60,7 +62,7 @@ protect_from_forgery
   end
 
   private
-  def item_params
-    params.require(:item)
-  end
+    def item_params
+      params.require(:item)
+    end
 end
