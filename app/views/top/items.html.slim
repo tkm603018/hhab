@@ -38,7 +38,7 @@ div class='px-5 pt-1 pb-1'
         tbody
           - @items.map do |item| 
             tr
-              td = item.store.title
+              td = item&.store&.title
               td = categories[item.category]
               td = item.price
               td = l(item.purchased_at, format: :format2)

@@ -11,7 +11,14 @@ Rails.application.routes.draw do
   get '/archive/:slug', to: 'archive#subindex'
   get '/archive/:slug/:subslug', to: 'archive#subsubindex'
   
+  # resources :stores, only: [:index, :show, :create, :destroy]
+  get 'stores/:title', to: 'stores#show'
+  get 'stores/', to: 'stores#index'
+  delete 'stores/:title', to: 'stores#destroy'
+  post 'stores/:title', to: 'stores#create'
+
   resources :items, only: [:index, :edit, :new, :create, :update, :destroy]
+
   resources :users, only: [:new, :create, :update]
   resources :sessions, only: [:create, :destroy]
   resource :user_profile, only: [:show]

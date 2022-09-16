@@ -4,15 +4,25 @@
   div class='px-5'
     h2 class='fw-bold pt-4 pb-1' 追加フォーム
 
-  = form_for(:item, url: '/items', html: { class: 'form-format1' }) do |f|
+  div class='form-format1'
     | 店舗名・用途がない場合は▼に記入してください
-    div class='form-floating mb-4'
-      = f.text_field :title, class: 'form-control', id: 'floatingInput1'
-      = f.label '店舗名・用途', for: 'floatingInput1'
-      - if @stores.present?
-        = f.select :store, @stores, {}, class: 'form-select', id: 'floatingSelect2'
-    div class='form-floating mb-4'
-      = f.date_field :purchased_at, value: '%m:%d', class: 'form-control', id: 'floatingDateField', required: true
+    div class='form-floating mt-1 mb-1' style="display: flex; align-items: center;"
+      input class='form-control' id='floatingInput1' value='#{@item&.store&.title || ''}'
+      label for='floatingInput1'
+        店舗名・用途
+      div style='padding-left: 0.5rem'
+        button id='search-button' class="btn btn-secondary bi bi-search" style='border-radius: 0.3rem;'
+      div style='padding-left: 0.5rem'
+        button id='reset-button' class="btn btn-success bi-arrow-counterclockwise" style='border-radius: 0.3rem;'
+      div style='padding-left: 0.5rem'
+        button id='add-button' class="btn btn-primary bi bi-plus-lg" style='border-radius: 0.3rem;'
+    div id='data-select' class='mb-4' style="display: none; width: 100%;"
+    
+  = form_for(:item, url: '/items', html: { class: 'form-format1' }) do |f|
+    div class='form-floating mt-1 mb-1' style="display: flex; align-items: center;"
+      = f.text_field :title, value: @item&.store&.title || '',class: 'form-control d-none', id: 'store_title'
+    div class='form-floating mt-4 mb-4'
+      = f.date_field :purchased_at, class: 'form-control', id: 'floatingDateField', required: true
       = f.label '日付', for: 'floatingDateField'
     div class='form-floating mb-4'
       = f.select :category, categories, {}, class: 'form-select', id: 'floatingSelect1', required: true
@@ -24,4 +34,147 @@
       = f.text_field :description, class: 'form-control', id: 'floatingInput3'
       = f.label '備考', for: 'floatingInput3'
     div class='form-floating mb-4'
-      = f.submit '登録する', class: 'btn btn-lg btn-primary'
+      = f.submit '登録する', id: 'add-item', class: 'btn btn-lg btn-primary'
+
+  javascript:
+    const getDataList = (title) => {
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        const url = `${gon.site_url}/stores/${title}`
+        xhr.onload = (e) => {
+          if (xhr.status === 200) {
+            resolve(xhr.response);
+          } else {
+            reject(JSON.parse(xhr.response));
+          }
+        }
+        xhr.open("GET", url, true);
+        xhr.send();
+      });
+    };
+
+    const addStore = (title) => {
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        const url = `${gon.site_url}/stores/${title}`
+        const csrfToken = document.getElementsByTagName('head')[0].querySelector("meta[name='csrf-token']").getAttribute("content")
+        xhr.onload = (e) => {
+          if (xhr.status === 200) {
+            resolve(xhr.response);
+          } else {
+            reject(JSON.parse(xhr.response));
+          }
+        }
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader('X-CSRF-Token', csrfToken)
+        xhr.send();
+      });
+    };
+
+    const destroyStore = (title) => {
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        const url = `${gon.site_url}/stores/${title}`
+        const csrfToken = document.getElementsByTagName('head')[0].querySelector("meta[name='csrf-token']").getAttribute("content")
+        xhr.onload = (e) => {
+          if (xhr.status === 200) {
+            resolve(xhr.response);
+          } else {
+            reject(JSON.parse(xhr.response));
+          }
+        }
+        xhr.open("DELETE", url, true);
+        xhr.setRequestHeader('X-CSRF-Token', csrfToken)
+        xhr.send();
+      });
+    };
+
+    const selectElement = document.querySelector('#floatingInput1');
+    const searchButton = document.getElementById("search-button")
+    searchButton.addEventListener('click', async (e) => {
+      const text = await selectElement.value
+      getDataList(text).then((data) => {
+      data && addElement(JSON.parse(data))
+      })
+    });
+
+    const listElement = document.getElementById("data-select");
+    const resetButton = document.getElementById("reset-button")
+    resetButton.addEventListener('click', (e) => {
+      selectElement.value = ''
+      while(listElement.lastChild) listElement.removeChild(listElement.lastChild)
+    });
+
+    const addButton = document.getElementById("add-button")
+    addButton.addEventListener('click', async (e) => {
+      if (window.confirm(`${selectElement.value} を作成しますか？`)) {
+        const res = await addStore(selectElement.value).then((data)=>JSON.parse(data))
+        const createdStore = res.data
+        getDataList(createdStore.title).then((data)=>{
+          data && addElement(JSON.parse(data))
+        })
+      }
+    });
+
+    const storeTitleButton = document.getElementById("store_title")
+
+    const addElement = (data) => {
+      // selectタグを取得する
+      listElement.style.display = 'initial'
+      Object.assign(listElement.style,{
+        maxHeight: '40rem',
+        display: 'block',
+        overflowY: 'scroll',
+        textAlign: 'center',
+      })
+      // elementの子要素を削除
+      while(listElement.lastChild) listElement.removeChild(listElement.lastChild)
+
+      for (let i = 0; i < data.length; i++) {
+        const listItemElement = document.createElement("div");
+        listItemElement.className = ''
+        listItemElement.id = `list-item-${i}`
+        Object.assign(listItemElement.style,{
+          display: 'flex',
+          width: '100%'
+        });
+
+        const listItemTitleButtonElement = document.createElement("button");
+        listItemTitleButtonElement.className = 'data-button btn btn-primary'
+        listItemTitleButtonElement.innerText = data[i]['title']
+        Object.assign(listItemTitleButtonElement.style,{
+          border: '0.1rem solid #000',
+          borderRadius: '0.3rem',
+          width: '100%',
+          margin: '0.3rem',
+        });
+        listItemTitleButtonElement.addEventListener('click', (e) => {
+          selectElement.value = data[i]['title']
+          e.target.className = 'data-button btn btn-primary active'
+          storeTitleButton.value = data[i]['title']
+          while(listElement.lastChild) listElement.removeChild(listElement.lastChild)
+        });
+
+        const listItemRemoveButtonElement = document.createElement("button");
+        listItemRemoveButtonElement.className = 'data-button btn btn-danger bi bi-x-lg'
+        Object.assign(listItemRemoveButtonElement.style,{
+          border: '0.1rem solid #000',
+          borderRadius: '0.3rem',
+          width: '20%',
+          margin: '0.3rem',
+        });
+        listItemRemoveButtonElement.addEventListener('click', (e) => {
+          selectElement.value = ''
+          e.target.className = 'data-button btn btn-danger active bi bi-x-lg'
+          const targetlistItem = document.getElementById(`list-item-${i}`)
+          if (window.confirm(`${data[i]['title']} を削除しますか？`)) {
+            listElement.removeChild(targetlistItem)
+            destroyStore(data[i]['title'])
+          }
+        });
+
+        listItemElement.appendChild(listItemTitleButtonElement);
+        listItemElement.appendChild(listItemRemoveButtonElement);
+        listElement.appendChild(listItemElement);
+      }
+    }

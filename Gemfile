@@ -22,12 +22,13 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'bootstrap', '~> 5.0'
 gem 'mysql2'
+gem 'gon'
 gem 'dotenv-rails'
 gem 'html2slim'
 gem 'slim'
 gem 'simple_command'
 gem 'jquery-rails'
-
+gem 'jquery-ui-rails'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

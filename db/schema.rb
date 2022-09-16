@@ -10,20 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_07_162034) do
+ActiveRecord::Schema.define(version: 2022_09_16_031304) do
 
-  create_table "items", charset: "utf8", force: :cascade do |t|
+  create_table "items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "userテーブルのid"
-    t.bigint "store_id", null: false, comment: "storeテーブルのid"
+    t.bigint "store_id", comment: "storeテーブルのid"
     t.integer "price", null: false, comment: "価格"
     t.integer "category", null: false, comment: "購入したした物のカテゴリ"
     t.datetime "purchased_at", null: false, comment: "購入したした日時"
     t.text "description", comment: "備考"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "store_title", null: false
   end
 
-  create_table "stores", charset: "utf8", force: :cascade do |t|
+  create_table "stores", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "userテーブルのid"
     t.string "title", null: false, comment: "購入した店舗の名称"
     t.string "description", comment: "備考"
@@ -31,7 +32,7 @@ ActiveRecord::Schema.define(version: 2022_09_07_162034) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "users", charset: "utf8", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false, comment: "氏名"
     t.string "email", null: false, comment: "メールアドレス"
     t.string "password_digest", null: false, comment: "パスワード"
@@ -39,7 +40,6 @@ ActiveRecord::Schema.define(version: 2022_09_07_162034) do
     t.integer "status", default: 0, comment: "ユーザー情報公開ステータス"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "room_password", default: "", comment: "家計簿公開用パスワード"
     t.string "reset_digest"
     t.datetime "reset_sent_at"
     t.string "activation_digest"
