@@ -7,11 +7,25 @@ body {
   font-family: sans-serif;
 }
 
-.form-format1{
-  margin: auto;
-  // padding-top: 1rem;
-  max-width: 23rem;
-  text-align: center !important;
+// pc
+@media only screen and (min-width: 769px) {
+  .form-format1{
+    margin: auto;
+    // padding-top: 1rem;
+    min-width: 23rem;
+    max-width: 33rem;
+    text-align: center !important;
+  }
+}
+
+// sp
+@media only screen and (max-width: 768px) {
+  .form-format1{
+    margin: auto;
+    // padding-top: 1rem;
+    width: 20rem;
+    text-align: center !important;
+  }
 }
 
 .anim-text-flow {
