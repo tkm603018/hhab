@@ -17,24 +17,19 @@ protect_from_forgery
   
   def edit
     @item = current_user.items.find(params[:id])
-    @stores = current_user.stores.map{|store| store.title }.unshift('')
+    gon.site_url = ENV['SITE_ORIGIN'].presence || 'http://localhost:3000'
   end
 
   def new
-    @stores = current_user.stores.map{|store| store.title }.unshift('')
+    gon.site_url = ENV['SITE_ORIGIN'].presence || 'http://localhost:3000'
   end
 
   def create
     params_date = Date.parse(item_params[:purchased_at])
-    flash[:alert] = '店舗名を指定してください' if item_params[:store].blank?  && item_params[:title].blank?
+    flash[:alert] = '店舗名を指定してください' if item_params[:title].blank?
     flash[:alert] = '今日以前の日付を指定してください' if Date.today <= params_date
-    if item_params[:title].present?
-      store = current_user.stores.create!(title: item_params[:title]) 
-    else
-      store = current_user.stores.where(title: item_params[:store])&.first
-    end
     current_user.items.create!(
-      store_id: store.id, 
+      store_title: item_params[:title] || '', 
       purchased_at: params_date,
       category: CATEGORIES.index(item_params[:category]), 
       price: item_params[:price], 
@@ -44,30 +39,25 @@ protect_from_forgery
   end
 
   def update
-    params_date = Date.parse(item_params[:purchased_at])
-    flash[:alert] = '店舗名を指定してください' if item_params[:store].blank?  && item_params[:title].blank?
-    flash[:alert] = '今日以前の日付を指定してください' if Date.today <= params_date
-    if item_params[:title].present?
-      store = current_user.stores.create!(title: item_params[:title]) 
-    else
-      store = current_user.stores.where(title: item_params[:store])&.first
+    if params[:action] == 'update'
+      params_date = Date.parse(item_params[:purchased_at])
+      flash[:alert] = '店舗名を指定してください' if item_params[:title].blank?
+      flash[:alert] = '今日以前の日付を指定してください' if Date.today <= params_date
+      current_user.items.find(params[:id]).update(
+        store_title: item_params[:title], 
+        purchased_at: params_date,
+        category: CATEGORIES.index(item_params[:category]), 
+        price: item_params[:price], 
+        description: item_params[:description]
+      )
+      redirect_to request.referer, notice: !flash[:alert] && '更新しました'
     end
-    current_user.items.find(params[:id]).update(
-      store_id: store.id, 
-      purchased_at: params_date,
-      category: CATEGORIES.index(item_params[:category]), 
-      price: item_params[:price], 
-      description: item_params[:description]
-    )
-    redirect_to request.referer, notice: !flash[:alert] && '更新しました'
   end
 
   def destroy
     current_user.items.find(params[:id]).destroy
     redirect_to request.referer, notice: '削除しました'
   end
-
-
 
   private
   def item_params
