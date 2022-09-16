@@ -12,6 +12,7 @@ class User < ApplicationRecord
   enum status: ['inactive', 'active'], _prefix: true
   has_many :items, dependent: :destroy
   has_many :stores, dependent: :destroy
+  has_many :categories, dependent: :destroy
 
   # 有効化用のメールを送信する
   def send_activation_email
