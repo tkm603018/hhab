@@ -1,6 +1,6 @@
 class Item < ApplicationRecord
   belongs_to :user
-  belongs_to :store
+  belongs_to :store, foreign_key: 'store_title', primary_key: 'title'
   with_options presence: true do
     validates :price
     validates :category
