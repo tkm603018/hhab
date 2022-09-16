@@ -25,7 +25,7 @@
       = f.date_field :purchased_at, value: l(@item.purchased_at, format: :format1), class: 'form-control', id: 'floatingDateField', required: true
       = f.label '日付', for: 'floatingDateField'
     div class='form-floating mb-4'
-      = f.select :category, options_for_select(categories, categories[@item.category]), {}, class: 'form-select', id: 'floatingSelect1', required: true
+      = f.select :category_path, options_for_select(@categories.map{|category|[category.title, category.path]}, @item.category_path), { include_blank: 'ステータスが選択されていません' }, class: 'form-select', id: 'floatingSelect1', required: true
       = f.label 'カテゴリ', for: 'floatingSelect1'
     div class='form-floating mb-4'
       = f.text_field :price, value: @item.price, class: 'form-select', id: 'floatingInput2', type: 'number', required: true

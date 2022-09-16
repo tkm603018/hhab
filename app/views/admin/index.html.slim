@@ -2,12 +2,14 @@
   = render 'sessions/signed'
   div class='px-5 pb-5'
     h2 class='fw-bold pb-1' = @charts_title
-    div class='px-3 py-2 text-center'
-      = pie_chart @category_total_price, @pie_chart_params
-      h5 class='py-2' 利用割合
-    div class='px-3 py-2 text-center' style='font-size: 20px;'
-      = column_chart @dayly_total_price, @column_chart_params
-      h5 class='py-2' 利用推移
+    / div class='px-3 py-2 text-center'
+    /   - if @category_total_price.present? && @pie_chart_params.present?
+    /     = pie_chart @category_total_price @pie_chart_params
+    /     h5 class='py-2' 利用割合
+    / div class='px-3 py-2 text-center' style='font-size: 20px;'
+    /   - if @dayly_total_price.present? && @column_chart_params.present?
+    /     = column_chart @dayly_total_price
+    /   h5 class='py-2' 利用推移
 
 - else
   = render '/header'

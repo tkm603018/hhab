@@ -1,0 +1,26 @@
+= render '/header'
+
+div class='px-5 pt-1 pb-1'
+  ul class='nav flex-column pb-4'
+    li class='nav-item mb-3'
+      = link_to '< カテゴリー一覧へ', categories_path, class: 'text-decoration-none text-dark'
+    li class='nav-item mb-3'
+      = link_to '< カテゴリー新規作成フォームへ', new_category_path, class: 'text-decoration-none text-dark'
+
+div class='px-5 pt-1 pb-1'
+  h2 class='fw-bold pb-1' 毎月の記録一覧
+  - if @subject.present?
+    div class='form-format1' style='padding-top: 7rem;'
+      - provide(:title, 'カテゴリー編集')
+      = form_for(:category, url: category_path(params[:id]), method: :put) do |f|
+        h2 カテゴリー編集
+        div class='form-floating mt-5 mb-3'
+          = f.text_field :title, value: @subject.title ,class: 'form-control', id: 'category_title', placeholder: 'タイトル'
+          = f.label :title, for: 'category_title'
+        div class='form-floating mt-5 mb-3'
+          = f.text_field :path, value: @subject.path, class: 'form-control', id: 'category_path', placeholder: 'パス', disabled: true
+          = f.label :path, for: 'category_path'
+        div class='form-floating mt-5 mb-3'
+          = f.select :status, options_for_select([{id: 1, name: '下書き', value: 'draft'},{id: 2, name: '公開済み', value: 'opened'},{id: 3, name: '非公開', value: 'closed'},].map{|c|[c[:name], c[:value], {}]}, @subject.status), {}, {class: 'form-control', id: 'category_status'}
+          = f.label :status, 'ステータス', for: 'category_status'
+        = f.submit "更新する", class: "btn btn-primary"

@@ -1,9 +1,9 @@
 class Item < ApplicationRecord
   belongs_to :user
   belongs_to :store, foreign_key: 'store_title', primary_key: 'title'
+  belongs_to :category, foreign_key: 'category_path', primary_key: 'path'
   with_options presence: true do
     validates :price
-    validates :category
     validates :purchased_at
   end
   

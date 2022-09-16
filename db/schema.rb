@@ -10,18 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_16_031304) do
+ActiveRecord::Schema.define(version: 2022_09_16_133955) do
+
+  create_table "categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title", null: false, comment: "タイトル"
+    t.string "path", null: false, comment: "パス"
+    t.integer "status", limit: 1, default: 1, null: false, comment: "ステータス"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false, comment: "userテーブルのid"
+  end
 
   create_table "items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "userテーブルのid"
     t.bigint "store_id", comment: "storeテーブルのid"
     t.integer "price", null: false, comment: "価格"
-    t.integer "category", null: false, comment: "購入したした物のカテゴリ"
+    t.integer "category", comment: "購入したした物のカテゴリ"
     t.datetime "purchased_at", null: false, comment: "購入したした日時"
     t.text "description", comment: "備考"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "store_title", null: false
+    t.string "category_path", null: false
   end
 
   create_table "stores", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

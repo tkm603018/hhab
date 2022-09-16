@@ -1,0 +1,23 @@
+= render '/header'
+
+div class='px-5 pt-1 pb-1'
+  ul class='nav flex-column pb-4'
+    li class='nav-item mb-3'
+      = link_to '< カテゴリー一覧へ', categories_path, class: 'text-decoration-none text-dark'
+
+div class='px-5 pt-1 pb-1'
+  h2 class='fw-bold pb-1' カテゴリー作成フォーム
+  div class='form-format1' style='padding-top: 7rem;'
+    - provide(:title, 'カテゴリー作成フォーム')
+    = form_for(:category, url: categories_path, method: :post) do |f|
+      h2 カテゴリー作成フォーム
+      div class='form-floating mt-5 mb-3'
+        = f.text_field :title , class: 'form-control', id: 'category_title', placeholder: 'タイトル', required: true
+        = f.label :title, for: 'category_title'
+      div class='form-floating mt-5 mb-3'
+        = f.text_field :path, class: 'form-control', id: 'category_path', placeholder: 'パス', required: true
+        = f.label :path, for: 'category_path'
+      div class='form-floating mt-5 mb-3'
+        = f.select :status, options_for_select([{id: 1, name: '下書き', value: 'draft'},{id: 2, name: '公開済み', value: 'opened'},{id: 3, name: '非公開', value: 'closed'},].map{|c|[c[:name], c[:value], {}]}), { include_blank: 'ステータスが選択されていません' }, {class: 'form-control', id: 'category_status', required: true}
+        = f.label :status, 'ステータス', for: 'category_status'
+      = f.submit "更新する", class: "btn btn-primary"
