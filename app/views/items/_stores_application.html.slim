@@ -1,0 +1,139 @@
+javascript:
+  const getDataList = (title) => {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      const url = `${gon.site_url}/stores/${title}`
+      xhr.onload = (e) => {
+        if (xhr.status === 200) {
+          resolve(xhr.response);
+        } else {
+          reject(JSON.parse(xhr.response));
+        }
+      }
+      xhr.open("GET", url, true);
+      xhr.send();
+    });
+  };
+
+  const addStore = (title) => {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      const url = `${gon.site_url}/stores/${title}`
+      const csrfToken = document.getElementsByTagName('head')[0].querySelector("meta[name='csrf-token']").getAttribute("content")
+      xhr.onload = (e) => {
+        if (xhr.status === 200) {
+          resolve(xhr.response);
+        } else {
+          reject(JSON.parse(xhr.response));
+        }
+      }
+      xhr.open("POST", url, true);
+      xhr.setRequestHeader('X-CSRF-Token', csrfToken)
+      xhr.send();
+    });
+  };
+
+  const destroyStore = (title) => {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      const url = `${gon.site_url}/stores/${title}`
+      const csrfToken = document.getElementsByTagName('head')[0].querySelector("meta[name='csrf-token']").getAttribute("content")
+      xhr.onload = (e) => {
+        if (xhr.status === 200) {
+          resolve(xhr.response);
+        } else {
+          reject(JSON.parse(xhr.response));
+        }
+      }
+      xhr.open("DELETE", url, true);
+      xhr.setRequestHeader('X-CSRF-Token', csrfToken)
+      xhr.send();
+    });
+  };
+
+  const selectElement = document.querySelector('#floatingInput1');
+  const listElement = document.getElementById("data-select");
+  const searchButton = document.getElementById("search-button")
+  searchButton.addEventListener('click', async (e) => {
+    const text = await selectElement.value
+    getDataList(text).then((data) => {
+      data && addElement(JSON.parse(data))
+    })
+  });
+  
+  const resetButton = document.getElementById("reset-button")
+  resetButton.addEventListener('click', (e) => {
+    selectElement.value = ''
+    while(listElement.lastChild) listElement.removeChild(listElement.lastChild)
+  });
+
+  const addButton = document.getElementById("add-button")
+  addButton.addEventListener('click', async (e) => {
+    if (window.confirm(`${selectElement.value} を作成しますか？`)) {
+      const res = await addStore(selectElement.value).then((data)=>JSON.parse(data))
+      const createdStore = res.data
+      getDataList(createdStore.title).then((data)=>{
+        data && addElement(JSON.parse(data))
+      })
+    }
+  });
+
+  const storeTitleButton = document.getElementById("store_title")
+
+  const addElement = (data) => {
+    Object.assign(listElement.style,{
+      display: 'initial',
+      maxHeight: '40rem',
+      display: 'block',
+      overflowY: 'scroll',
+      textAlign: 'center',
+    })
+    while(listElement.lastChild) listElement.removeChild(listElement.lastChild)
+
+    for (let i = 0; i < data.length; i++) {
+      const listItemElement = document.createElement("div");
+      listItemElement.id = `list-item-${i}`
+      Object.assign(listItemElement.style,{
+        display: 'flex',
+        width: '100%'
+      });
+
+      const listItemTitleButtonElement = document.createElement("button");
+      listItemTitleButtonElement.className = 'data-button btn btn-primary'
+      listItemTitleButtonElement.innerText = data[i]['title']
+      Object.assign(listItemTitleButtonElement.style,{
+        border: '0.1rem solid #000',
+        borderRadius: '0.3rem',
+        width: '100%',
+        margin: '0.3rem',
+      });
+      listItemTitleButtonElement.addEventListener('click', (e) => {
+        selectElement.value = data[i]['title']
+        e.target.className = 'data-button btn btn-primary active'
+        storeTitleButton.value = data[i]['title']
+        while(listElement.lastChild) listElement.removeChild(listElement.lastChild)
+      });
+
+      const listItemRemoveButtonElement = document.createElement("button");
+      listItemRemoveButtonElement.className = 'data-button btn btn-danger bi bi-x-lg'
+      Object.assign(listItemRemoveButtonElement.style,{
+        border: '0.1rem solid #000',
+        borderRadius: '0.3rem',
+        width: '20%',
+        margin: '0.3rem',
+      });
+      listItemRemoveButtonElement.addEventListener('click', (e) => {
+        selectElement.value = ''
+        e.target.className = 'data-button btn btn-danger active bi bi-x-lg'
+        const targetlistItem = document.getElementById(`list-item-${i}`)
+        if (window.confirm(`${data[i]['title']} を削除しますか？`)) {
+          listElement.removeChild(targetlistItem)
+          destroyStore(data[i]['title'])
+        }
+      });
+
+      listItemElement.appendChild(listItemTitleButtonElement);
+      listItemElement.appendChild(listItemRemoveButtonElement);
+      listElement.appendChild(listItemElement);
+    }
+  }

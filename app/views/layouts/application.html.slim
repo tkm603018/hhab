@@ -1,53 +1,48 @@
 doctype html
-html
+html[lang="ja"]
   head
     title
       | Hhab
     meta[name="viewport" content="width=device-width,initial-scale=1"]
     = csrf_meta_tags
     = csp_meta_tag
-    / = stylesheet_link_tag 'application', media: 'all'
-    / = javascript_pack_tag 'application'
-    / = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = stylesheet_link_tag 'application', media: 'all'
-    / = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     = include_gon
     = javascript_pack_tag 'application'
     = stylesheet_pack_tag 'application', media: 'all'
     link[rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"]
-    link[src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"] 
-
+    link[src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"]
 
   body
     - flash.each do |key, value|
       - if key == 'notice' || key == 'info' || key == 'success'
-        div class='flash alert alert-success text-center' style='position: absolute; top: 0px; width: 100%;'
-          = content_tag(:span, value, class: key)
+        div class='flash alert alert-success top-0 w-100 text-center position-absolute' style='z-index: 100;'
+          = content_tag :span, value, class: key
       - else key == 'danger'
-        div class='flash alert alert-danger text-center' style='position: absolute; top: 0px; width: 100%;'
-          = content_tag(:span, value, class: key)
+        div class='flash alert alert-danger top-0 w-100 text-center position-absolute' style='z-index: 100;'
+          = content_tag :span, value, class: key
     = yield
 
   javascript:
     const fadeOut = (node, duration) => {
-      node.style.opacity = 1;
-
-      const start = performance.now();
       
-      requestAnimationFrame(function tick(timestamp) {
-        // イージング計算式（linear）
-        const easing = (timestamp - start) / duration;
-
-        // opacityが0より小さくならないように
-        node.style.opacity = Math.max(1 - easing, 0);
+      if (node !== null) {
+        node.style.opacity = 1
+        const start = performance.now();
         
-        // イージング計算式の値が1より小さいとき
-        if (easing < 1) {
-          requestAnimationFrame(tick);
-        } else {
-          node.style.opacity = '';
-          node.style.display = 'none';
-        }
-      });
+        requestAnimationFrame(function tick(timestamp) {
+          const easing = (timestamp - start) / duration;
+
+          node.style.opacity = Math.max(1 - easing, 0)
+          
+          if (easing < 1) {
+            requestAnimationFrame(tick);
+          } else {
+            node.style.opacity = 0;
+            node.style.display = 'none';
+          }
+        });
+      }
     }
-    fadeOut(document.querySelector('.flash'), 3000);
+
+    fadeOut(document.querySelector('.flash'), 2700);
