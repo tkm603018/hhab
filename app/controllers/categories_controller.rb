@@ -19,8 +19,8 @@ class CategoriesController < ApplicationController
   end
 
   def update
-    current_user.categories.find(params[:id]).update(category_params)
-    redirect_to edit_category_path, notice: '更新しました'
+    current_user.categories.find(params[:id]).update!(category_params)
+    redirect_to categories_path, notice: '更新しました'
   end
 
   def destroy
@@ -30,6 +30,6 @@ class CategoriesController < ApplicationController
 
   private
     def category_params
-      params.require(:category).permit(:title, :path, :status)
+      params.require(:category).permit(:title, :path, :income, :order, :status)
     end
 end

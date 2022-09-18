@@ -34,7 +34,7 @@ protect_from_forgery
       store_title: item_params[:title] || '', 
       purchased_at: params_date,
       category_path: item_params[:category_path], 
-      price: item_params[:price], 
+      price: convert_price(item_params[:category_path], item_params[:price]), 
       description: item_params[:description]
     )
     redirect_to new_item_path, notice: !flash[:alert] && '登録しました'
@@ -49,7 +49,7 @@ protect_from_forgery
         store_title: item_params[:title], 
         purchased_at: params_date,
         category_path: item_params[:category_path], 
-        price: item_params[:price], 
+        price: convert_price(item_params[:category_path], item_params[:price]),
         description: item_params[:description]
       )
       redirect_to request.referer, notice: !flash[:alert] && '更新しました'
@@ -64,5 +64,10 @@ protect_from_forgery
   private
     def item_params
       params.require(:item)
+    end
+
+    def convert_price(category_path, price)
+      income = Category.where(path: category_path).first.income
+      !!income ? price.to_i.abs : price.to_i.abs * -1
     end
 end
