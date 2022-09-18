@@ -1,8 +1,13 @@
 class Category < ApplicationRecord
-  # has_many :categories, foreign_key: 'path'
   belongs_to :user, foreign_key: 'user_id', primary_key: 'id'
   has_many :items, foreign_key: 'path'
   belongs_to :user
+
+  with_options presence: true do
+    validates :title
+    validates :path
+    validates :status
+  end
 
   validates :path, uniqueness: {
     scope: :user_id,
@@ -14,7 +19,7 @@ class Category < ApplicationRecord
     closed:     2,  # 非公開
   }
 
-  scope :published, -> {
-    where( status: :opened )
-  }
+  scope :published, -> { where( status: :opened ) }
+  scope :incomed, -> { where( income: true ) }
+  scope :outcomed, -> { where( income: false ) }
 end
