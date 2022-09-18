@@ -6,7 +6,7 @@ div class='px-5 pt-1 pb-1'
       = link_to 'カテゴリー新規作成フォームへ >', new_category_path, class: 'text-decoration-none text-dark'
 
 div class='px-5 pt-1 pb-1'
-  h2 class='fw-bold pb-1' 毎月の記録一覧
+  h2 class='fw-bold pb-1' カテゴリ一覧
   - if @subjects.present?
     table class='table text-center table-striped'
       thread
@@ -14,6 +14,8 @@ div class='px-5 pt-1 pb-1'
           th scope='col' ID
           th scope='col' タイトル
           th scope='col' パス
+          th scope='col' 種類
+          th scope='col' 順番
           th scope='col' 削除
 
       tbody
@@ -22,4 +24,6 @@ div class='px-5 pt-1 pb-1'
             td = link_to subject.id, edit_category_path(subject.id), class: 'text-decoration-none'
             td = subject.title
             td = subject.path
+            td = subject.income == 1 ? '収入' : '支出'
+            td = subject.order
             td = button_to '削除する', category_path(subject.id), method: :delete, data: { confirm: "本当に削除してもいいですか？" }, class: 'btn btn-outline-danger'

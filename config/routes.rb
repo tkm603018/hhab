@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
+  root :to => 'admin#index'
   get '/admin' => 'admin#index'
   get '/monthly', to: 'monthly#index'
   get '/archive/', to: 'archive#index'
@@ -32,7 +33,7 @@ Rails.application.routes.draw do
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :categories, only: [:index, :new, :create, :edit, :update, :destroy]
 
-  root :to => 'top#index'
+  
   get '/:slug', to: 'top#show'
   get '/:slug/months', to: 'top#months'
   get '/:slug/months/:month', to: 'top#items'

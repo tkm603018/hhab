@@ -20,7 +20,7 @@
     
   = form_for(:item, url: '/items', method: :post, html: { class: 'form-format1' }) do |f|
     div class='form-floating mt-1 mb-1' style="display: flex; align-items: center;"
-      = f.text_field :title, value: @item&.store&.title || '',class: 'form-control d-none', id: 'store_title'
+      = f.text_field :title, value: @item&.store&.title || '', class: 'form-control d-none', id: 'store_title'
     div class='form-floating mt-4 mb-4'
       = f.date_field :purchased_at, class: 'form-control', id: 'floatingDateField', required: true
       = f.label '日付', for: 'floatingDateField'
