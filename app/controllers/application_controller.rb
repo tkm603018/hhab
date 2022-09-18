@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include SessionsHelper
+  helper_method :current_page, :current_limit
   # CATEGORIES = ['food', 'necessaries', 'hobbies', 'transportation', 'fashion', 'helth', 'universiity', 'utility', 'account']
   CATEGORIES = ['食費', '日用品', '交通費', '趣味・娯楽', '服・美容', '健康・医療', '大学・部費・教材', '水道・光熱費', '口座']
   CATEGORIES_COLORS = ["#f50057", "#ffc400", "#f44336", "#8bc34a", "#4caf50", "#00bcd4", "#2979ff", "#4caf50", "#dddddd"]
@@ -11,6 +12,14 @@ class ApplicationController < ActionController::Base
       output = @items.where(category: CATEGORIES.length-2).pluck(:purchased_at, :price)
       output.map{|x| ["#{x[0].year}/#{x[0].month}", x[1]]}
     end
+  end
+
+  def current_page
+    (params[:page].presence || 1).to_i
+  end
+
+  def current_limit( default=30 )
+    (params[:limit].presence || default).to_i
   end
 
   private

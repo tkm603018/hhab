@@ -3,16 +3,18 @@ class ArchiveController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-    @months = current_user.items.order("purchased_at desc").pluck(:purchased_at).map{|a| a.strftime("%Y-%m")}.group_by(&:itself).transform_values(&:size).to_a
+    @months = current_user.items.order("purchased_at desc").group_by{|a|"#{a.purchased_at.year}-#{sprintf("%02d", a.purchased_at.month)}"}.map{|a|[a[0], a[1].count]}
+    # .page(current_page).per(current_limit(30))
   end
 
   def subindex
     @items = current_user.items
     @date = Date.parse("#{params[:slug]}-01")
-    @list_items = @items.where(purchased_at: @date.all_month.map{|a|a.all_day}).order("#{sort_column} #{sort_direction}")
+    @all_month = ["#{@date} 00:00:00.000000000 JST +09:00".."#{@date.end_of_month} 23:59:59 +0900"]
+    @list_items = current_user.items.where(purchased_at: @all_month).order("#{sort_column} #{sort_direction}")
 
     @charts_title = "今月(#{@date.year}年#{@date.month}月)の結果"
-    @last_month_items = current_user.items.where(purchased_at: @date.all_month)
+    @last_month_items = current_user.items.where(purchased_at: @all_month)
     @categories = current_user.categories.published.order(order: 'asc')
     @categories_title_path = @categories.pluck(:title,:path)
     @items = @last_month_items.group(:category_path).sum(:price)
