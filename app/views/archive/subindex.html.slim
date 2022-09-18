@@ -3,11 +3,11 @@
   div class='px-5 pb-5'
     h2 class='fw-bold pb-1' = @charts_title
     div class='px-3 py-2 text-center'
-      / = pie_chart @category_total_price, @pie_chart_params
-      h5 class='py-2' 利用割合
-    div class='px-3 py-2 text-center' style="font-size: 20px;"
-      / = column_chart @dayly_total_price, @column_chart_params
-      h5 class='py-2' 利用推移
+      canvas id='polar_area' style='max-height: 35rem'
+    div class='px-3 py-2 text-center' style='font-size: 20px;'
+      canvas id='bar' style='max-height: 35rem'
+
+  = render '/chart'
 
   div class='px-5 py-5'
     h2 class='fw-bold pb-1'
@@ -33,7 +33,7 @@
             - @list_items.map do |item| 
               tr
                 td = link_to item.id, edit_item_path(item), class: 'text-decoration-none'
-                td = item.store&.title || ''
+                td = item&.store_title || ''
                 td = item&.category_path || ''
                 td = item.price
                 td = l(item.purchased_at, format: :format2)

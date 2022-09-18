@@ -12,7 +12,7 @@ html[lang="ja"]
     = stylesheet_pack_tag 'application', media: 'all'
     link[rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"]
     link[src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"]
-
+    
   body
     - flash.each do |key, value|
       - if key == 'notice' || key == 'info' || key == 'success'
@@ -21,7 +21,9 @@ html[lang="ja"]
       - else key == 'danger'
         div class='flash alert alert-danger top-0 w-100 text-center position-absolute' style='z-index: 100;'
           = content_tag :span, value, class: key
+    script[src="https://cdn.jsdelivr.net/npm/chart.js"]
     = yield
+
 
   javascript:
     const fadeOut = (node, duration) => {

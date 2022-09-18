@@ -1,0 +1,88 @@
+javascript:
+  const polar_areaElement = document.getElementById('polar_area').getContext('2d');
+  const polar_areaData = {
+    labels: gon.labels,
+    datasets: [{
+      label: '',
+      data: gon.data,
+      backgroundColor: gon.colors,
+    }]
+  };
+  const polar_areaConfig = {
+    type: 'polarArea',
+    data: polar_areaData,
+    options: {
+      responsive: true,
+      plugins: {
+        scales: {
+          r: {
+            pointLabels: {
+              display: true,
+              centerPointLabels: true,
+              font: {
+                size: 18
+              }
+            }
+          }
+        },
+        legend: {
+          position: 'top',
+          labels: {
+            font: {
+              size: 15
+            }
+          }
+        },
+        title: {
+          display: true,
+          text: '利用割合',
+          font:{size: 20}
+        }
+      }
+    },
+  };
+  new Chart(polar_areaElement, polar_areaConfig);
+
+  const barElement = document.getElementById('bar').getContext('2d');
+  const barData = {
+    labels: gon.bar_labels,
+    datasets: [{
+      label: '利用推移',
+      data: gon.items_dayly_sum,
+      backgroundColor: '#fd7e14',
+    }]
+  };
+  const barConfig = {
+    type: 'bar',
+    data: barData,
+    options: {
+      responsive: true,
+      plugins: {
+        scales: {
+          r: {
+            pointLabels: {
+              display: true,
+              centerPointLabels: true,
+              font: {
+                size: 18
+              }
+            }
+          }
+        },
+        legend: {
+          position: 'top',
+          labels: {
+            font: {
+              size: 15
+            }
+          }
+        },
+        title: {
+          display: true,
+          text: '利用推移',
+          font:{size: 20}
+        }
+      }
+    },
+  };
+  new Chart(barElement, barConfig);
