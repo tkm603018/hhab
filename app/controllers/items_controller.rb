@@ -43,6 +43,7 @@ protect_from_forgery
   def update
     if params[:action] == 'update'
       params_date = Date.parse(item_params[:purchased_at])
+      p params_date
       flash[:alert] = '店舗名を指定してください' if item_params[:title].blank?
       flash[:alert] = '今日以前の日付を指定してください' if Date.today <= params_date
       current_user.items.find(params[:id]).update(
