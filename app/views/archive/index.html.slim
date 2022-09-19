@@ -1,10 +1,6 @@
 - if signed_in?
   = render 'sessions/signed'
 
-  / - base_count = @months.limit_value * (@months.current_page-1)
-  / - start_count = base_count + 1
-  / - end_count = base_count + @months.size
-
   div class='px-5 py-5'
     h2 class='fw-bold pb-1' 毎月の記録一覧
     - if @months.present?
@@ -19,5 +15,11 @@
             tr
               td = link_to "#{month}", "#{archive_path}/#{month}", class: 'text-decoration-none'
               td = count
-    - else
-      div 現在、予約枠は登録されていません
+
+      div id='pagination'
+        = paginate @months
+        / div id='pagination-select'
+        /   = select_tag :limit, options_for_select([["30件", 30], ["60件", 60], ["90件", 90]], selected: current_limit), { id: 'pagination-limit', class: ''}
+      
+- else
+  div 現在、記録は登録されていません
