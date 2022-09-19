@@ -1,5 +1,11 @@
 - if signed_in?
   = render 'sessions/signed'
+
+  div class='sp d-flex' style='padding: 0 1rem 1rem 1rem;'
+    button class='sp btn btn-outline-primary m-2' onclick="location.href='#{archive_path}'" style='width: max-content;'
+      i class='bi bi-arrow-left p-2'
+      | 一覧
+
   div style='padding: 0 1rem 1rem 1rem;'
     h4 class='fw-bold pb-1' = @charts_title
     div class='py-2 text-center'

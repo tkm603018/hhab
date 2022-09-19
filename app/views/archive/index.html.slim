@@ -1,6 +1,11 @@
 - if signed_in?
   = render 'sessions/signed'
 
+  div class='d-flex' style='padding: 0 1rem 1rem 1rem;'
+    button class='sp btn btn-outline-primary m-2' onclick="location.href='#{new_item_path}'" style='width: max-content;'
+      i class='bi bi-plus p-2'
+      | 新規作成
+  
   div style='padding: 0 1rem 0 1rem;'
     h4 class='fw-bold pb-1' 毎月の記録
     - if @months.present?

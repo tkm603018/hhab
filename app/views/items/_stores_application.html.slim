@@ -99,7 +99,7 @@ javascript:
       });
 
       const listItemTitleButtonElement = document.createElement("button");
-      listItemTitleButtonElement.className = 'data-button btn btn-primary'
+      listItemTitleButtonElement.className = 'data-button btn btn-outline-primary'
       listItemTitleButtonElement.innerText = data[i]['title']
       Object.assign(listItemTitleButtonElement.style,{
         border: '0.1rem solid #000',
@@ -109,13 +109,13 @@ javascript:
       });
       listItemTitleButtonElement.addEventListener('click', (e) => {
         selectElement.value = data[i]['title']
-        e.target.className = 'data-button btn btn-primary active'
+        e.target.className = 'data-button btn btn-outline-primary active'
         storeTitleButton.value = data[i]['title']
         while(listElement.lastChild) listElement.removeChild(listElement.lastChild)
       });
 
       const listItemRemoveButtonElement = document.createElement("button");
-      listItemRemoveButtonElement.className = 'data-button btn btn-danger bi bi-x-lg'
+      listItemRemoveButtonElement.className = 'data-button btn btn-outline-danger bi bi-x-lg'
       Object.assign(listItemRemoveButtonElement.style,{
         border: '0.1rem solid #000',
         borderRadius: '0.3rem',
@@ -124,7 +124,7 @@ javascript:
       });
       listItemRemoveButtonElement.addEventListener('click', (e) => {
         selectElement.value = ''
-        e.target.className = 'data-button btn btn-danger active bi bi-x-lg'
+        e.target.className = 'data-button btn btn-outline-danger active bi bi-x-lg'
         const targetlistItem = document.getElementById(`list-item-${i}`)
         if (window.confirm(`${data[i]['title']} を削除しますか？`)) {
           listElement.removeChild(targetlistItem)
