@@ -4,6 +4,7 @@ class CategoriesController < ApplicationController
 
   def index
     @subjects = current_user.categories.published.order("updated_at DESC")
+    @subjects = @subjects.page(current_page).per(current_limit(10))
   end
 
   def new
