@@ -34,8 +34,8 @@ Rails.application.routes.draw do
   resources :categories, only: [:index, :new, :create, :edit, :update, :destroy]
 
   
-  get '/:slug', to: 'top#show'
-  get '/:slug/months', to: 'top#months'
-  get '/:slug/months/:month', to: 'top#items'
+  # get '/:slug', to: 'top#show'
+  # get '/:slug/months', to: 'top#months'
+  # get '/:slug/months/:month', to: 'top#items'
 
 end
