@@ -2,11 +2,11 @@ class UserMailer < ApplicationMailer
 
   def account_activation(props)
     @user = props[:props]
-    mail to: @user.email, subject: "Account activation"
+    mail to: @user.email, subject: "アカウントの有効化"
   end
 
   def password_reset(props)
     @user = props[:props]
-    mail to: @user.email, subject: "Password reset"
+    mail to: @user.email, subject: "パスワードリセット"
   end
 end
