@@ -1,39 +1,47 @@
 - if signed_in?
   = render 'sessions/signed'
 
-  div class='px-5'
-    h2 class='fw-bold pt-4 pb-1' 編集フォーム
+  div class='d-flex' style='padding: 0 1rem 0 1rem;'
+    button class='btn btn-outline-primary m-2' onclick="location.href='#{new_item_path}'" style='width: max-content;'
+      i class='bi bi-plus p-2'
+      | 新規作成
 
-  div class='form-format1'
-    | 店舗名・用途がない場合は▼に記入してください
-    div class='form-floating mt-1 mb-1' style="display: flex; align-items: center;"
-      input class='form-control' id='floatingInput1' value='#{@item&.store_title || ''}'
-      label for='floatingInput1'
-        店舗名・用途
-      div style='padding-left: 0.5rem'
-        button id='search-button' class="btn btn-secondary bi bi-search" style='border-radius: 0.3rem;'
-      div style='padding-left: 0.5rem'
-        button id='reset-button' class="btn btn-success bi-arrow-counterclockwise" style='border-radius: 0.3rem;'
-      div style='padding-left: 0.5rem'
-        button id='add-button' class="btn btn-primary bi bi-plus-lg" style='border-radius: 0.3rem;'
-    div id='data-select' class='mb-4' style="display: none; width: 100%;"
+  div style='padding: 0 1rem 0 1rem;'
+    h4 class='fw-bold pt-4 pb-1' 編集フォーム
 
-  = form_for(:item, url: item_path(params[:id]), method: :put, html: { class: 'form-format1' }) do |f|
-    div class='form-floating mt-1 mb-1' style="display: flex; align-items: center;"
-      = f.text_field :title, value: @item&.store_title || '',class: 'form-control d-none', id: 'store_title'
-    div class='form-floating mb-4'
-      = f.date_field :purchased_at, value: l(@item.purchased_at, format: :format1), class: 'form-control', id: 'floatingDateField', required: true
-      = f.label '日付', for: 'floatingDateField'
-    div class='form-floating mb-4'
-      = f.select :category_path, options_for_select(@categories.map{|category|[category.title, category.path]}, @item.category_path), { include_blank: 'ステータスが選択されていません' }, class: 'form-select', id: 'floatingSelect1', required: true
-      = f.label 'カテゴリ', for: 'floatingSelect1'
-    div class='form-floating mb-4'
-      = f.text_field :price, value: @item.price.abs, class: 'form-select', id: 'floatingInput2', type: 'number', required: true
-      = f.label '価格', for: 'floatingInput2'
-    div class='form-floating mb-4'
-      = f.text_field :description, value: @item.description, class: 'form-control', id: 'floatingInput3'
-      = f.label '備考', for: 'floatingInput3'
-    div class='form-floating mb-4'
-      = f.submit '登録する', id: 'update-item', class: 'btn btn-lg btn-primary'
+    div class='form-format1'
+      | 店舗名・用途がない場合は▼に記入してください
+      div class='form-floating mt-1 mb-1' style="display: flex; align-items: center;"
+        input class='form-control' id='floatingInput1' value='#{@item&.store_title || ''}'
+        label for='floatingInput1'
+          | 店舗名・用途
+        div id='search-div' class='nav-link-button' style='padding-left: 0.5rem'
+          p id='search-div-tooltip' class='tooltip-top-left' 検索する
+          button id='search-button' class="btn btn-outline-secondary bi bi-search" style='border-radius: 0.3rem;'
+        div id='reset-div' class='nav-link-button' style='padding-left: 0.5rem'
+          p id='reset-div-tooltip' class='tooltip-top-left' リセットする
+          button id='reset-button' class="btn btn-outline-success bi-arrow-counterclockwise" style='border-radius: 0.3rem;'
+        div id='add-div' class='nav-link-button' style='padding-left: 0.5rem'
+          p id='add-div-tooltip' class='tooltip-top-left' 追加する
+          button id='add-button' class="btn btn-outline-primary bi bi-plus-lg" style='border-radius: 0.3rem;'
+      div id='data-select' class='mb-4' style="display: none; width: 100%;"
 
-  = render 'stores_application'
+    = form_for(:item, url: item_path(params[:id]), method: :put, html: { class: 'form-format1' }) do |f|
+      div class='form-floating mt-3 mb-1' style="display: flex; align-items: center;"
+        = f.text_field :title, value: @item&.store_title || '',class: 'form-control d-none', id: 'store_title'
+      div class='form-floating mb-4'
+        = f.date_field :purchased_at, value: l(@item.purchased_at, format: :format1), class: 'form-control', id: 'floatingDateField', required: true
+        = f.label '日付', for: 'floatingDateField'
+      div class='form-floating mb-4'
+        = f.select :category_path, options_for_select(@categories.map{|category|[category.title, category.path]}, @item.category_path), { include_blank: 'ステータスが選択されていません' }, class: 'form-select', id: 'floatingSelect1', required: true
+        = f.label 'カテゴリ', for: 'floatingSelect1'
+      div class='form-floating mb-4'
+        = f.text_field :price, value: @item.price.abs, class: 'form-select', id: 'floatingInput2', type: 'number', required: true
+        = f.label '価格', for: 'floatingInput2'
+      div class='form-floating mb-4'
+        = f.text_field :description, value: @item.description, class: 'form-control', id: 'floatingInput3'
+        = f.label '備考', for: 'floatingInput3'
+      div class='form-floating mb-4'
+        = f.submit '登録する', id: 'update-item', class: 'btn btn-lg btn-primary'
+
+    = render 'stores_application'
