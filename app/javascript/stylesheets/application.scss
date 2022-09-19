@@ -54,3 +54,65 @@ body {
   -webkit-text-fill-color: transparent;
   animation: gradientEffect 2.5s infinite alternate;
 }
+
+#pagination>.pagination {
+  width: 100%;
+  display: block;
+  text-align: center;
+  padding-top: 0.6rem;
+  line-height: 2.8rem;
+}
+#pagination>.pagination>span {
+  margin: 0.2rem;
+  border: 0.05rem solid #696969;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  color: #0d6efd;
+  text-align: center;
+}
+#pagination>.pagination>.first>a {
+  text-decoration: none;
+  padding-left: 0.3rem;
+}
+#pagination>.pagination>.prev>a {
+  text-decoration: none;
+  padding-left: 0.3rem;
+}
+#pagination>.pagination>.current {
+  text-decoration: none;
+  padding-left: 0.8rem;
+  background: #0d6efd;
+  color: white;
+}
+#pagination>.pagination>.page>a {
+  text-decoration: none;
+  padding-left: 0.3rem;
+}
+#pagination>.pagination>.next>a {
+  text-decoration: none;
+  padding-left: 0.3rem;
+}
+#pagination>.pagination>.last>a {
+  text-decoration: none;
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
+}
+
+// /* 表示しているページ番号のデザイン */
+// #pagination>.pagination>.active {
+// }
+// /*ホバー時のデザイン*/
+#pagination>.pagination>span:hover {
+  background: rgba(74, 146, 253, 0.692);
+}
+
+#pagination>#pagination-select {
+  text-align: center;
+  margin: 0.5rem;
+}
+
+#pagination-limit {
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+}
+
