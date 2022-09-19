@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     (params[:page].presence || 1).to_i
   end
 
-  def current_limit( default=30 )
+  def current_limit( default=10 )
     (params[:limit].presence || default).to_i
   end
 

@@ -29,6 +29,7 @@ gem 'slim'
 gem 'simple_command'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+gem 'kaminari'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
