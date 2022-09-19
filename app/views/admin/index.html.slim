@@ -1,10 +1,10 @@
 - if signed_in?
   = render 'sessions/signed'
-  div class='px-5 pb-5'
-    h2 class='fw-bold pb-1' = @charts_title
-    div class='px-3 py-2 text-center'
+  div style='padding: 0 1rem 0 1rem;'
+    h4 class='fw-bold pb-1' = @charts_title
+    div class='py-2 text-center'
       canvas id='polar_area' style='max-height: 35rem'
-    div class='px-3 py-2 text-center' style='font-size: 20px;'
+    div class='py-2 text-center' style='font-size: 20px;'
       canvas id='bar' style='max-height: 35rem'
 
   = render '/chart'

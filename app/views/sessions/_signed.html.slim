@@ -1,37 +1,99 @@
-div class='navbar navbar-expand-lg navbar-light bg-light p-3 px-md-4 mb-3'
+div class='navbar navbar-expand-lg navbar-light bg-light px-md-4 mb-3'
   div class='container-fluid'
     div class='navbar-brand' style='font-weight: bold; display: inline-grid;'
       = link_to 'HHAB', root_path, class: 'text-decoration-none anim-text-flow2'
       span style='font-weight: bold; margin-top: -1rem; font-size: 0.8rem;'
         = 'house hold account book'
-    div class='navbar-item'
+    div class='navbar-item d-flex'
       / span class='p-3'
       /   = link_to admin_url, id: 'tooltipButton', style: 'opacity: 1; text-decoration: none;' do
       /     span id='toolTip' data-bs-toggle="tooltip" data-bs-placement="top" style='opacity: 0; font-size: 0.8rem; position: absolute; display: flex; top: 0.8rem'
       /       | 管理画面へ
       /     i.bi.fs-4.bi-box-arrow-up-right
-      span class='p-3'
-        = link_to 'プロフィールへ', user_profile_path, class: 'text-decoration-none text-dark'
-      span class='p-3'
-        = link_to 'ログアウト', session_path(@current_user.id), method: :delete, class: 'btn btn-outline-dark text-decoration-none'
+      div id='pc-header-nav' class='d-flex'
+        div id='items-link' class='nav-link-button p-3 fs-3'
+          p id='items-link-tooltip' class='tooltip-top-left' 追加フォームへ
+          = link_to '', new_item_path, class: 'bi bi-file-earmark-plus-fill'
+        div id='category-link' class='nav-link-button p-3 fs-3'
+          p id='category-link-tooltip' class='tooltip-top-left' カテゴリ一覧へ
+          = link_to '', categories_path, class: 'bi bi-tags-fill'
+        div id='archive-link' class='nav-link-button p-3 fs-3'
+          p id='archive-link-tooltip' class='tooltip-top-left' 過去の記録へ
+          = link_to '', archive_path, class: 'bi bi-archive-fill'
+        div id='user-profile-link' class='nav-link-button p-3 fs-3'
+          p id='user-profile-link-tooltip' class='tooltip-top-left' プロフィールへ
+          = link_to '', user_profile_path, class: 'bi bi-person-circle'
+        div id='logout-button' class='nav-link-button p-3 fs-3'
+          p id='logout-button-tooltip' class='tooltip-top-left' ログアウトする
+          = link_to '', session_path(@current_user.id), method: :delete, class: 'bi bi-box-arrow-right'
 
-div class='px-5 pt-1 pb-1'
-  ul class='nav flex-column pb-4'
-    / li class='nav-item mb-3'
-    /   = link_to '購入品一覧へ >', items_path, class: 'text-decoration-none text-dark'
-    li class='nav-item mb-3'
-      = link_to '追加フォームへ >', new_item_path, class: 'text-decoration-none text-dark'
-    li class='nav-item mb-3'
-      = link_to 'カテゴリ一覧へ >', categories_path, class: 'text-decoration-none text-dark'
-    li class='nav-item mb-3'
-      = link_to '過去の記録 >', archive_path, class: 'text-decoration-none text-dark'
-    li class='nav-item mb-3'
-      = link_to '毎月の推移 >', monthly_path, class: 'text-decoration-none text-dark'
-    li class='nav-item mb-3'
-      = link_to '< 戻る', request.referer, class: 'text-decoration-none text-dark'
+      div id='menu-button' class='p-3 bi bi-list fs-1'
+      div id='side-menu' class='d-none' style=''
+        div id='side-menu-button' class='bi bi-x fs-1'
+        div id='side-menu-list' class='pt-1 pb-1'
+          ul class='nav flex-column pb-4'
+            li class='nav-item mb-3'
+              = link_to '追加フォーム', new_item_path, class: 'text-decoration-none text-dark'
+            li class='nav-item mb-3'
+              = link_to 'カテゴリ一覧', categories_path, class: 'text-decoration-none text-dark'
+            li class='nav-item mb-3'
+              = link_to '過去の記録', archive_path, class: 'text-decoration-none text-dark'
+            / li class='nav-item mb-3'
+            /   = link_to '毎月の推移', monthly_path, class: 'text-decoration-none text-dark'
+            li class='nav-item mb-3'
+              = link_to 'プロフィール', user_profile_path, class: 'text-decoration-none text-dark'
+            li class='nav-item mb-3'
+              = link_to 'ログアウト', session_path(@current_user.id), method: :delete, class: 'btn btn-outline-dark text-decoration-none'
 
-/ javascript:
-/   const target = document.getElementById("tooltipButton");
+    / const ToolTipLeftElement = document.querySelector(".tooltip-left");
+    / var navLinkButtons = [].slice.call(document.querySelectorAll('.nav-link-button'))
+    / var tooltipList = navLinkButtons.map(function (el) {
+    /   el.children[0].addEventListener('mouseover', (e) => {
+    /     console.log(e)
+    /     e.style.display = 'initial'
+    /   })
+    /   el.children[0].addEventListener('mouseleave', (e) => {e.style.display = 'none'})
+    / })
+
+  javascript:
+    const itemsLink = document.getElementById("items-link");
+    const itemsLinkTooltip = document.getElementById('items-link-tooltip');
+    itemsLink.addEventListener('mouseover', (e) => {itemsLinkTooltip.style.display = 'initial'})
+    itemsLink.addEventListener('mouseleave', (e) => {itemsLinkTooltip.style.display = 'none'})
+
+    const categoryLink = document.getElementById("category-link");
+    const categoryLinkTooltip = document.getElementById('category-link-tooltip');
+    categoryLink.addEventListener('mouseover', (e) => {categoryLinkTooltip.style.display = 'initial'})
+    categoryLink.addEventListener('mouseleave', (e) => {categoryLinkTooltip.style.display = 'none'})
+
+    const archiveLink = document.getElementById("archive-link");
+    const archiveLinkTooltip = document.getElementById('archive-link-tooltip');
+    archiveLink.addEventListener('mouseover', (e) => {archiveLinkTooltip.style.display = 'initial'})
+    archiveLink.addEventListener('mouseleave', (e) => {archiveLinkTooltip.style.display = 'none'})
+
+    const userProfileLink = document.getElementById("user-profile-link");
+    const userProfileLinkTooltip = document.getElementById('user-profile-link-tooltip');
+    userProfileLink.addEventListener('mouseover', (e) => {userProfileLinkTooltip.style.display = 'initial'})
+    userProfileLink.addEventListener('mouseleave', (e) => {userProfileLinkTooltip.style.display = 'none'})
+
+    const logoutButton = document.getElementById("logout-button");
+    const logoutButtonTooltip = document.getElementById('logout-button-tooltip');
+    logoutButton.addEventListener('mouseover', (e) => {logoutButtonTooltip.style.display = 'initial'})
+    logoutButton.addEventListener('mouseleave', (e) => {logoutButtonTooltip.style.display = 'none'})
+
+    const menuButtonElement = document.getElementById("menu-button");
+    const sideMenuElement = document.getElementById("side-menu");
+    const sideMenuButtonElement = document.getElementById("side-menu-button");
+    sideMenuButtonElement.addEventListener('click', (e) => {
+      sideMenuElement.className = 'd-none'
+    })
+    menuButtonElement.addEventListener('click', (e) => {
+      sideMenuElement.className = 'd-initial'
+    });
+
+
+
+/ const target = document.getElementById("tooltipButton");
 /   const popup = document.getElementById("toolTip");
 
 /   // ボタンにhoverした時

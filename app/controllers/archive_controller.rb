@@ -14,7 +14,7 @@ class ArchiveController < ApplicationController
     @list_items = current_user.items.where(purchased_at: @all_month).order("#{sort_column} #{sort_direction}")
     @list_items = Kaminari.paginate_array(@list_items).page(current_page).per(current_limit(10))
 
-    @charts_title = "今月(#{@date.year}年#{@date.month}月)の結果"
+    @charts_title = "#{@date.year}年#{@date.month}月"
     @last_month_items = current_user.items.where(purchased_at: @all_month)
     @categories = current_user.categories.published.order(order: 'asc')
     @categories_title_path = @categories.pluck(:title,:path)

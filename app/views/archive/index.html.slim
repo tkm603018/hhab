@@ -1,8 +1,8 @@
 - if signed_in?
   = render 'sessions/signed'
 
-  div class='px-5 py-5'
-    h2 class='fw-bold pb-1' 毎月の記録一覧
+  div style='padding: 0 1rem 0 1rem;'
+    h4 class='fw-bold pb-1' 毎月の記録
     - if @months.present?
       table class='table text-center table-striped'
         thread
@@ -20,6 +20,3 @@
         = paginate @months
         / div id='pagination-select'
         /   = select_tag :limit, options_for_select([["30件", 30], ["60件", 60], ["90件", 90]], selected: current_limit), { id: 'pagination-limit', class: ''}
-      
-- else
-  div 現在、記録は登録されていません

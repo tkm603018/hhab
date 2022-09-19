@@ -4,7 +4,7 @@ class AdminController < ApplicationController
   def index
     return nil unless current_user
     @last_month = Date.today.last_month
-    @charts_title = "今月(#{@last_month.year}年#{@last_month.month}月)の結果"
+    @charts_title = "先月(#{@last_month.year}年#{@last_month.month}月)"
     @last_month_items = current_user.items.where(purchased_at: ["#{@last_month} 00:00:00.000000000 JST +09:00".."#{@last_month.end_of_month} 23:59:59 +0900"])
 
     @categories = current_user.categories.published.order(order: 'asc')
