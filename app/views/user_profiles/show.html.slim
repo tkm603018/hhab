@@ -22,14 +22,14 @@
             td 
               div class='form-control me-2 w-100'
                 = f.text_area :description, value: current_user.description, class: 'form-control'
-          tr
-            th class='text-center' 公開設定
-            td 
-              div class='form-control me-2 w-100'
-                = f.radio_button :status, 'active', class: 'form-check-input px-1', checked: current_user.status_active?
-                = f.label '公開する', class: 'form-check-label px-1'
-                = f.radio_button :status, 'inactive', class: 'form-check-input px-1', checked: current_user.status_inactive?
-                = f.label '非公開にする', class: 'form-check-label px-1'
+          / tr
+          /   th class='text-center' 公開設定
+          /   td 
+          /     div class='form-control me-2 w-100'
+          /       = f.radio_button :status, 'active', class: 'form-check-input px-1', checked: current_user.status_active?
+          /       = f.label '公開する', class: 'form-check-label px-1'
+          /       = f.radio_button :status, 'inactive', class: 'form-check-input px-1', checked: current_user.status_inactive?
+          /       = f.label '非公開にする', class: 'form-check-label px-1'
         = f.submit '変更', class: 'btn btn-outline-primary', style: "margin-inline-start: auto; width: 30%;"
 - else
   div class='navbar navbar-expand-lg navbar-light bg-light p-3 px-md-4 mb-3'
