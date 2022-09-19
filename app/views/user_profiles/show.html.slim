@@ -1,8 +1,8 @@
 - if signed_in?
   = render 'sessions/signed'
 
-  div class='mx-5'
-    h2 class='fw-bold pb-1' プロフィール
+  div style='padding: 0 1rem 0 1rem;'
+    h4 class='fw-bold pb-1' プロフィール
     - if current_user.present?
       = form_with(url: user_path(current_user), method: :put, html: { class: 'd-grid'}) do |f|
         table class='table'
