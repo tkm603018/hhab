@@ -3,7 +3,7 @@ class AdminController < ApplicationController
 
   def index
     return nil unless current_user
-    @last_month = Date.today.last_month
+    @last_month = Date.today.last_month.all_month.first
     @charts_title = "先月(#{@last_month.year}年#{@last_month.month}月)"
     @last_month_items = current_user.items.where(purchased_at: ["#{@last_month} 00:00:00.000000000 JST +09:00".."#{@last_month.end_of_month} 23:59:59 +0900"])
 
@@ -16,9 +16,9 @@ class AdminController < ApplicationController
     gon.data = @categories_sum.filter{|a|a != nil}
     gon.colors = gon.data.map{|a| "##{Random.bytes(3).unpack1('H*')}55" }
 
-    @items_dayly_sum = @last_month_items.order(purchased_at: 'asc').group("Date(purchased_at)").sum(:price)
-    gon.bar_labels = @items_dayly_sum.map{|a|a[0].day}
+    @items_dayly = @last_month_items.order(:purchased_at).group_by{|a|a.purchased_at.day}
+    @items_dayly_sum = @items_dayly.map{|a|[a[0], a[1].sum{|b|b.price}]}
+    gon.bar_labels = @items_dayly_sum.map{|a|a[0]}
     gon.items_dayly_sum = @items_dayly_sum.map{|a|a[1]}
-    gon.bar_colors = gon.items_dayly_sum.map{|a| "##{Random.bytes(3).unpack1('H*')}55" }
   end
 end
