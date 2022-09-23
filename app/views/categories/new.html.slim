@@ -7,7 +7,8 @@ div class='sp px-5 pt-1 pb-1'
       | 一覧
 
 div style='padding: 0 1rem 0 1rem;'
-  h4 class='fw-bold' カテゴリー作成フォーム
+  div class='pt-4 pb-3'
+    h4 class='fw-bold' style='text-align: center;' カテゴリー作成フォーム
   div class='form-format1'
     = form_for(:category, url: categories_path, method: :post) do |f|
       div class='form-floating mt-4 mb-3'

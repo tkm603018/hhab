@@ -2,15 +2,16 @@
   = render 'sessions/signed'
 
   div class='d-flex' style='padding: 0 1rem 0 1rem;'
-    button class='btn btn-outline-primary m-2' onclick="location.href='#{new_item_path}'" style='width: max-content;'
+    button class='sp btn btn-outline-primary m-2' onclick="location.href='#{new_item_path}'" style='width: max-content;'
       i class='bi bi-plus p-2'
       | 新規作成
 
   div style='padding: 0 1rem 0 1rem;'
-    h4 class='fw-bold pt-4 pb-1' 編集フォーム
+    div class='pt-4 pb-3'
+      h4 class='fw-bold' style='text-align: center;' 記録編集フォーム
 
     div class='form-format1'
-      | 店舗名・用途がない場合は▼に記入してください
+      | 店舗名・用途を検索するか，+ボタンを押して作成してください。
       div class='form-floating mt-1 mb-1' style="display: flex; align-items: center;"
         input class='form-control' id='floatingInput1' value='#{@item&.store_title || ''}'
         label for='floatingInput1'
@@ -44,4 +45,4 @@
       div class='form-floating mb-4'
         = f.submit '登録する', id: 'update-item', class: 'btn btn-lg btn-primary'
 
-    = render 'stores_application'
+  = render 'stores_application'

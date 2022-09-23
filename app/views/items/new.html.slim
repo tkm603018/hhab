@@ -7,10 +7,11 @@
       | 一覧
   
   div style='padding: 0 1rem 0 1rem;'
-    h4 class='fw-bold pt-4 pb-1' 追加フォーム
+    div class='pt-4 pb-3'
+      h4 class='fw-bold' style='text-align: center;' 記録追加フォーム
 
-    div class='form-format1'
-      | 店舗名・用途がない場合は▼に記入してください
+    div class='form-format1 mt-4'
+      | 店舗名・用途を検索するか，+ボタンを押して作成してください。
       div class='form-floating mt-1 mb-1' style="display: flex; align-items: center;"
         input class='form-control' id='floatingInput1' value='#{@item&.store&.title || ''}'
         label for='floatingInput1'
@@ -44,20 +45,4 @@
       div class='form-floating mb-4'
         = f.submit '登録する', id: 'add-item', class: 'btn btn-lg btn-primary'
 
-    = render 'stores_application'
-
-  javascript:
-    const searchDiv = document.getElementById("search-div");
-    const searchDivTooltip = document.getElementById('search-div-tooltip');
-    searchDiv.addEventListener('mouseover', (e) => {searchDivTooltip.style.display = 'initial'})
-    searchDiv.addEventListener('mouseleave', (e) => {searchDivTooltip.style.display = 'none'})
-
-    const resetDiv = document.getElementById("reset-div");
-    const resetDivTooltip = document.getElementById('reset-div-tooltip');
-    resetDiv.addEventListener('mouseover', (e) => {resetDivTooltip.style.display = 'initial'})
-    resetDiv.addEventListener('mouseleave', (e) => {resetDivTooltip.style.display = 'none'})
-
-    const addDiv = document.getElementById("add-div");
-    const addDivTooltip = document.getElementById('add-div-tooltip');
-    addDiv.addEventListener('mouseover', (e) => {addDivTooltip.style.display = 'initial'})
-    addDiv.addEventListener('mouseleave', (e) => {addDivTooltip.style.display = 'none'})
+  = render 'stores_application'

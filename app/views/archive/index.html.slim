@@ -1,14 +1,15 @@
 - if signed_in?
   = render 'sessions/signed'
 
-  div class='d-flex' style='padding: 0 1rem 1rem 1rem;'
-    button class='sp btn btn-outline-primary m-2' onclick="location.href='#{new_item_path}'" style='width: max-content;'
-      i class='bi bi-plus p-2'
-      | 新規作成
-  
-  div style='padding: 0 1rem 0 1rem;'
-    h4 class='fw-bold pb-1' 毎月の記録
-    - if @months.present?
+  - if @months.present?
+    div class='d-flex' style='padding: 0 1rem 1rem 1rem;'
+      button class='sp btn btn-outline-primary m-2' onclick="location.href='#{new_item_path}'" style='width: max-content;'
+        i class='bi bi-plus p-2'
+        | 新規作成
+    
+    div style='padding: 0 1rem 0 1rem;'
+      div class='pt-2 pb-4'
+        h4 class='fw-bold text-center' 毎月の記録一覧
       table class='table text-center table-striped'
         thread
           tr
@@ -25,3 +26,11 @@
         = paginate @months
         / div id='pagination-select'
         /   = select_tag :limit, options_for_select([["30件", 30], ["60件", 60], ["90件", 90]], selected: current_limit), { id: 'pagination-limit', class: ''}
+
+  - else
+    div class='pt-4 pb-3 text-center'
+      div class='fw-bold' 記録が作成されていません。
+      div class='py-4'
+        span class='px-3 pc'
+          = link_to '記録を作成する', new_item_path, class: 'link-primary text-decoration-none'
+          bi.bi-chevron-right.text-primary

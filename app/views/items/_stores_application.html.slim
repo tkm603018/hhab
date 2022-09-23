@@ -137,3 +137,19 @@ javascript:
       listElement.appendChild(listItemElement);
     }
   }
+
+
+  const searchDiv = document.getElementById("search-div");
+  const searchDivTooltip = document.getElementById('search-div-tooltip');
+  searchDiv.addEventListener('mouseover', (e) => {searchDivTooltip.style.display = 'initial'})
+  searchDiv.addEventListener('mouseleave', (e) => {searchDivTooltip.style.display = 'none'})
+
+  const resetDiv = document.getElementById("reset-div");
+  const resetDivTooltip = document.getElementById('reset-div-tooltip');
+  resetDiv.addEventListener('mouseover', (e) => {resetDivTooltip.style.display = 'initial'})
+  resetDiv.addEventListener('mouseleave', (e) => {resetDivTooltip.style.display = 'none'})
+
+  const addDiv = document.getElementById("add-div");
+  const addDivTooltip = document.getElementById('add-div-tooltip');
+  addDiv.addEventListener('mouseover', (e) => {addDivTooltip.style.display = 'initial'})
+  addDiv.addEventListener('mouseleave', (e) => {addDivTooltip.style.display = 'none'})
