@@ -27,7 +27,28 @@ class ApplicationController < ActionController::Base
   def signed_in_user
     unless signed_in?
       flash[:alert] = 'サインインするか登録してください'
-      redirect_to admin_path
+      redirect_to login_path
+    end
+  end
+
+  def logged_out_user
+    if signed_in?
+      session.delete(:user_id)
+      @current_user = nil
+    end
+  end
+
+  def no_category
+    unless User.find(current_user.id).categories.published.count > 0
+      flash[:alert] = 'カテゴリーを作成してください'
+      redirect_to new_category_path
+    end
+  end
+
+  def no_store
+    unless User.find(current_user.id).stores.count > 0
+      flash[:alert] = '店舗名・用途を作成してください'
+      # redirect_to new_item_path
     end
   end
 end

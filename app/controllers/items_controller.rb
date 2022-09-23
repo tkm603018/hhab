@@ -1,5 +1,7 @@
 class ItemsController < ApplicationController
 before_action :signed_in_user, only: [:edit, :new, :create, :update]
+before_action :no_category
+before_action :no_store
 helper_method :sort_column, :sort_direction
 protect_from_forgery
 

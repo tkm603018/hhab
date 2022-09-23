@@ -14,13 +14,13 @@ Rails.application.routes.draw do
 
   root :to => 'welcome#index'
   get '/welcome' => 'welcome#index'
-  get '/admin' => 'admin#index'
+  get '/logged_in' => 'admin#index'
+  get '/login' => 'sessions#unsigned'
   get '/monthly', to: 'monthly#index'
   get '/archive/', to: 'archive#index'
   get '/archive/:slug', to: 'archive#subindex'
   get '/archive/:slug/:subslug', to: 'archive#subsubindex'
   
-  # resources :stores, only: [:index, :show, :create, :destroy]
   get 'stores/:title', to: 'stores#show'
   get 'stores/', to: 'stores#index'
   delete 'stores/:title', to: 'stores#destroy'
@@ -33,10 +33,5 @@ Rails.application.routes.draw do
   resources :account_activations, only: [:edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :categories, only: [:index, :new, :create, :edit, :update, :destroy]
-
-  
-  # get '/:slug', to: 'top#show'
-  # get '/:slug/months', to: 'top#months'
-  # get '/:slug/months/:month', to: 'top#items'
 
 end

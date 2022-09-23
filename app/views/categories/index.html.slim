@@ -1,34 +1,44 @@
-= render 'sessions/signed'
+- if signed_in?
+  = render 'sessions/signed'
 
-div class='px-5 pt-1 pb-1'
-  ul class='nav flex-column pb-4'
-    button class='sp btn btn-outline-primary' onclick="location.href='#{new_category_path}'" style='width: max-content;'
-      i class='bi bi-plus p-2'
-      | 新規作成
-
-div class='px-5 pt-1 pb-1'
-  h2 class='fw-bold pb-1' カテゴリ一覧
   - if @subjects.present?
-    div style='overflow-x: scroll;'
-      table class='table text-center table-striped'
-        thread
-          tr
-            th scope='col' ID
-            th scope='col' タイトル
-            th scope='col' パス
-            th scope='col' 種類
-            th scope='col' 順番
-            th scope='col' 削除
+    div class='px-5 pt-1 pb-1'
+      ul class='nav flex-column pb-4'
+        button class='sp btn btn-outline-primary' onclick="location.href='#{new_category_path}'" style='width: max-content;'
+          i class='bi bi-plus p-2'
+          | 新規作成
 
-        tbody
-          - @subjects.map do |subject|
+    div class='px-5 pt-1 pb-1'
+      div class='pt-2 pb-4'
+        h4 class='fw-bold text-center' カテゴリ一覧
+      div style='overflow-x: scroll;'
+        table class='table text-center table-striped'
+          thread
             tr
-              td = link_to subject.id, edit_category_path(subject.id), class: 'text-decoration-none'
-              td = subject.title
-              td = subject.path
-              td = subject.income == 1 ? '収入' : '支出'
-              td = subject.order
-              td = button_to '削除する', category_path(subject.id), method: :delete, data: { confirm: "本当に削除してもいいですか？" }, class: 'btn btn-outline-danger'
+              th scope='col' ID
+              th scope='col' タイトル
+              th scope='col' パス
+              th scope='col' 種類
+              th scope='col' 順番
+              th scope='col' 削除
 
-    div id='pagination'
-      = paginate @subjects
+          tbody
+            - @subjects.map do |subject|
+              tr
+                td = link_to subject.id, edit_category_path(subject.id), class: 'text-decoration-none'
+                td = subject.title
+                td = subject.path
+                td = subject.income == 1 ? '収入' : '支出'
+                td = subject.order
+                td = button_to '削除する', category_path(subject.id), method: :delete, data: { confirm: "本当に削除してもいいですか？" }, class: 'btn btn-outline-danger'
+
+        div id='pagination'
+          = paginate @subjects
+
+  - else
+    div class='pt-4 pb-3 text-center'
+      div class='fw-bold' カテゴリーが作成されていません。
+      div class='py-4'
+        span class='px-3'
+          = link_to 'カテゴリーを作成する', new_category_path, class: 'link-primary text-decoration-none'
+          bi.bi-chevron-right.text-primary

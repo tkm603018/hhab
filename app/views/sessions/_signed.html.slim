@@ -1,22 +1,25 @@
 div class='navbar navbar-expand-lg px-md-4 mb-3' style='background-color: #f5f5f5;'
   div class='container-fluid'
     div class='navbar-brand' style='font-weight: bold; display: inline-grid;'
-      = link_to 'HHAB', admin_path, class: 'text-decoration-none anim-text-flow2'
+      = link_to 'HHAB', logged_in_path, class: 'text-decoration-none anim-text-flow2'
       span style='font-weight: bold; margin-top: -1rem; font-size: 0.8rem;'
         = 'house hold account book'
     div class='navbar-item d-flex'
       div id='pc-header-nav' class='d-flex'
         div id='items-link' class='pc nav-link-button p-3 fs-3'
-          p id='items-link-tooltip' class='tooltip-top-left' 追加フォームへ
+          p id='items-link-tooltip' class='tooltip-top-left' 記録追加
           = link_to '', new_item_path, class: 'bi bi-file-earmark-plus-fill'
-        div id='category-link' class='pc nav-link-button p-3 fs-3'
-          p id='category-link-tooltip' class='tooltip-top-left' カテゴリ一覧へ
-          = link_to '', categories_path, class: 'bi bi-tags-fill'
         div id='archive-link' class='pc nav-link-button p-3 fs-3'
-          p id='archive-link-tooltip' class='tooltip-top-left' 過去の記録へ
+          p id='archive-link-tooltip' class='tooltip-top-left' 記録一覧
           = link_to '', archive_path, class: 'bi bi-archive-fill'
+        div id='add-category-link' class='pc nav-link-button p-3 fs-3'
+          p id='add-category-link-tooltip' class='tooltip-top-left' カテゴリ追加
+          = link_to '', new_category_path, class: 'bi bi-tag-fill'
+        div id='category-link' class='pc nav-link-button p-3 fs-3'
+          p id='category-link-tooltip' class='tooltip-top-left' カテゴリ一覧
+          = link_to '', categories_path, class: 'bi bi-tags-fill'
         div id='user-profile-link' class='pc nav-link-button p-3 fs-3'
-          p id='user-profile-link-tooltip' class='tooltip-top-left' プロフィールへ
+          p id='user-profile-link-tooltip' class='tooltip-top-left' プロフィール
           = link_to '', user_profile_path, class: 'bi bi-person-circle'
         div id='logout-button' class='pc nav-link-button p-3 fs-3'
           p id='logout-button-tooltip' class='tooltip-top-left' ログアウトする
@@ -28,11 +31,13 @@ div class='navbar navbar-expand-lg px-md-4 mb-3' style='background-color: #f5f5f
         div id='side-menu-list' class='pt-1 pb-1'
           ul class='nav flex-column pb-4'
             li class='nav-item mb-3'
-              = link_to '追加フォーム', new_item_path, class: 'text-decoration-none text-dark'
+              = link_to '記録追加', new_item_path, class: 'text-decoration-none text-dark'
+            li class='nav-item mb-3'
+              = link_to '記録一覧', archive_path, class: 'text-decoration-none text-dark'
+            li class='nav-item mb-3'
+              = link_to 'カテゴリ追加', new_category_path, class: 'text-decoration-none text-dark'
             li class='nav-item mb-3'
               = link_to 'カテゴリ一覧', categories_path, class: 'text-decoration-none text-dark'
-            li class='nav-item mb-3'
-              = link_to '過去の記録', archive_path, class: 'text-decoration-none text-dark'
             / li class='nav-item mb-3'
             /   = link_to '毎月の推移', monthly_path, class: 'text-decoration-none text-dark'
             li class='nav-item mb-3'
@@ -46,15 +51,20 @@ div class='navbar navbar-expand-lg px-md-4 mb-3' style='background-color: #f5f5f
     itemsLink.addEventListener('mouseover', (e) => {itemsLinkTooltip.style.display = 'initial'})
     itemsLink.addEventListener('mouseleave', (e) => {itemsLinkTooltip.style.display = 'none'})
 
-    const categoryLink = document.getElementById("category-link");
-    const categoryLinkTooltip = document.getElementById('category-link-tooltip');
-    categoryLink.addEventListener('mouseover', (e) => {categoryLinkTooltip.style.display = 'initial'})
-    categoryLink.addEventListener('mouseleave', (e) => {categoryLinkTooltip.style.display = 'none'})
-
     const archiveLink = document.getElementById("archive-link");
     const archiveLinkTooltip = document.getElementById('archive-link-tooltip');
     archiveLink.addEventListener('mouseover', (e) => {archiveLinkTooltip.style.display = 'initial'})
     archiveLink.addEventListener('mouseleave', (e) => {archiveLinkTooltip.style.display = 'none'})
+    
+    const addCategoryLink = document.getElementById("add-category-link");
+    const addCategoryLinkTooltip = document.getElementById('add-category-link-tooltip');
+    addCategoryLink.addEventListener('mouseover', (e) => {addCategoryLinkTooltip.style.display = 'initial'})
+    addCategoryLink.addEventListener('mouseleave', (e) => {addCategoryLinkTooltip.style.display = 'none'})
+
+    const categoryLink = document.getElementById("category-link");
+    const categoryLinkTooltip = document.getElementById('category-link-tooltip');
+    categoryLink.addEventListener('mouseover', (e) => {categoryLinkTooltip.style.display = 'initial'})
+    categoryLink.addEventListener('mouseleave', (e) => {categoryLinkTooltip.style.display = 'none'})
 
     const userProfileLink = document.getElementById("user-profile-link");
     const userProfileLinkTooltip = document.getElementById('user-profile-link-tooltip');

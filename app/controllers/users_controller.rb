@@ -15,12 +15,12 @@ class UsersController < ApplicationController
       if @user.save
         @user.send_activation_email
         flash[:info] = "Please check your email to activate your account."
-        redirect_to admin_path, notice: '登録しました'
+        redirect_to new_user_path, notice: '登録しました'
       else
         render 'new'
       end
     else
-      redirect_to admin_path, alert: @user.errors.messages
+      redirect_to new_user_path, alert: @user.errors.messages
     end
   end
 
