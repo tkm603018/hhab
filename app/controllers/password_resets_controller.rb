@@ -12,7 +12,7 @@ class PasswordResetsController < ApplicationController
       @user.create_reset_digest
       @user.send_password_reset_email
       flash[:info] = 'パスワードのリセット手順が記載されたメールが送信されました'
-      redirect_to admin_path
+      redirect_to login_path
     else
       flash.now[:danger] = 'このメールアドレスは登録されていません'
       render new_password_reset_path
@@ -35,7 +35,7 @@ class PasswordResetsController < ApplicationController
     elsif @user.update(user_params)
       sign_in(@user)
       flash[:success] = 'パスワードがリセットされました。'
-      redirect_to admin_url
+      redirect_to logged_in_url
     end
   end
 
@@ -52,7 +52,7 @@ class PasswordResetsController < ApplicationController
     # 正しいユーザーかどうか確認する
     def valid_user
       unless (@user && @user.activated? && @user.authenticated?(:reset, params[:token]))
-        redirect_to admin_url
+        redirect_to logged_in_url
       end
     end
 

@@ -27,7 +27,14 @@ class ApplicationController < ActionController::Base
   def signed_in_user
     unless signed_in?
       flash[:alert] = 'サインインするか登録してください'
-      redirect_to admin_path
+      redirect_to login_path
+    end
+  end
+
+  def logged_out_user
+    if signed_in?
+      session.delete(:user_id)
+      @current_user = nil
     end
   end
 

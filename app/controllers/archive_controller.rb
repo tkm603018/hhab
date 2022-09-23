@@ -1,5 +1,5 @@
 class ArchiveController < ApplicationController
-  before_action :signed_in_user, only: [:new, :create]
+  before_action :signed_in_user, only: [:index, :subindex, :new, :create]
   helper_method :sort_column, :sort_direction
 
   def index
