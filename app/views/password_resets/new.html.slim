@@ -3,7 +3,7 @@
 div class='form-format1' style='padding-top: 7rem;'
   - provide(:title, "Forgot password")
   = form_for(:password_reset, url: password_resets_path) do |f|
-    h2 パスワードをリセット
+    h2 class='fw-bold' パスワードをリセットする
     div class='form-floating mt-5 mb-3'
       = f.email_field :email, class: 'form-control', id: 'floatingInput', placeholder: 'Email', required: true
       = f.label 'Email', for: 'floatingInput'
