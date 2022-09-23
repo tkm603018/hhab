@@ -30,4 +30,18 @@ class ApplicationController < ActionController::Base
       redirect_to admin_path
     end
   end
+
+  def no_category
+    unless User.find(current_user.id).categories.published.count > 0
+      flash[:alert] = 'カテゴリーを作成してください'
+      redirect_to new_category_path
+    end
+  end
+
+  def no_store
+    unless User.find(current_user.id).stores.count > 0
+      flash[:alert] = '店舗名・用途を作成してください'
+      # redirect_to new_item_path
+    end
+  end
 end
