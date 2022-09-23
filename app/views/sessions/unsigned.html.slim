@@ -1,0 +1,31 @@
+= render '/header'
+
+div class='form-format1' style='padding-top: 3rem;'
+  = form_for(:session, url: sessions_path, html: { class: 'mb-5' }) do |f|
+    div class='form-floating mt-5 mb-3'
+      = f.email_field :email, class: 'form-control', id: 'floatingInput', required: true, autocomplete: 'username'
+      = f.label 'Email', for: 'floatingInput'
+    div class='form-floating mb-4' style='display: flex; align-items: center;'
+      = f.password_field :password, class: 'form-control', id: 'floatingPassword', type: 'password', required: true, autocomplete: 'current-password'
+      = f.label 'Password', for: 'floatingPassword'
+      span id='buttonEye' class='bi bi-eye-fill px-2' name='icon' style='font-size: 1rem; position: absolute; right: 0.7rem;' onClick='handleClick()'
+    div class='form-floating mb-5'
+      = link_to 'パスワードを忘れた方はこちら', new_password_reset_path
+    = f.submit 'ログイン', class: 'btn btn-lg btn-primary'
+
+  javascript:
+    const handleClick = () => {
+      const txtPass = document.getElementById("floatingPassword");
+      const btnEye = document.getElementById("buttonEye");
+      if (txtPass.type === "text") {
+        txtPass.type = "password";
+        btnEye.className = "bi bi-eye-fill px-2";
+      } else {
+        txtPass.type = "text";
+        btnEye.className = "bi bi-eye-slash-fill px-2";
+      }
+    }
+
+  div
+    = link_to '新規ユーザー登録', new_user_path, class: 'link-primary text-decoration-none'
+    bi.bi-chevron-right.text-primary

@@ -18,11 +18,3 @@
         span class='px-3 pc'
           = link_to '記録を作成する', new_item_path, class: 'link-primary text-decoration-none'
           bi.bi-chevron-right.text-primary
-
-- else
-  = render '/header'
-  div class='form-format1' style='padding-top: 3rem;'
-    = render 'sessions/unsigned'
-    div
-      = link_to '新規ユーザー登録', new_user_path, class: 'link-primary text-decoration-none'
-      bi.bi-chevron-right.text-primary
