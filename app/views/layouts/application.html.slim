@@ -7,12 +7,13 @@ html[lang="ja"]
     meta[name="viewport" content="width=device-width,initial-scale=1"]
     = csrf_meta_tags
     = csp_meta_tag
+    = favicon_link_tag 'favicon.ico', rel: "icon", type: "image/png"
+    = favicon_link_tag 'apple-icon.png', rel: 'apple-touch-icon', type:'image/jpeg'
     = stylesheet_link_tag 'application', media: 'all'
     = include_gon
     = javascript_pack_tag 'application'
     = stylesheet_pack_tag 'application', media: 'all'
     link[rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"]
-    / link[src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"]
     
   body
     - flash.each do |key, value|

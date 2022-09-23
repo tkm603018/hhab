@@ -12,7 +12,8 @@ Rails.application.routes.draw do
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
-  root :to => 'admin#index'
+  root :to => 'welcome#index'
+  get '/welcome' => 'welcome#index'
   get '/admin' => 'admin#index'
   get '/monthly', to: 'monthly#index'
   get '/archive/', to: 'archive#index'

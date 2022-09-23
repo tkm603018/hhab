@@ -2,7 +2,7 @@
 
 div style='padding: 0 1rem 0 1rem;'
   = form_for(:user, url: users_path, html: { class: 'form-format1' }) do |f|
-    h4 class='fw-bold pt-5 pb-5' ユーザー作成フォーム
+    h2 class='fw-bold pt-5 pb-5' ユーザー作成する
     div class='form-floating mb-3'
       = f.text_field :name, class: 'form-control', id: 'floatingInput', placeholder: 'Name', required: true
       = f.label 'Name', for: 'floatingInput'
