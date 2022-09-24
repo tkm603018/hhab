@@ -7,6 +7,7 @@ class Category < ApplicationRecord
     validates :title
     validates :path
     validates :status
+    validates :color
   end
 
   validates :path, uniqueness: {
@@ -22,4 +23,14 @@ class Category < ApplicationRecord
   scope :published, -> { where( status: :opened ) }
   scope :incomed, -> { where( income: true ) }
   scope :outcomed, -> { where( income: false ) }
+
+  def status_label
+    if self.status == 'draft'
+      '下書き'
+    elsif self.status == 'opened'
+      '公開済み'
+    elsif self.status == 'closed'
+      '非公開'
+    end
+  end
 end
