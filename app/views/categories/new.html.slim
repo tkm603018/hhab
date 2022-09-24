@@ -1,29 +1,41 @@
-= render 'sessions/signed'
+- if signed_in?
+  = render 'sessions/signed'
 
-div class='sp px-5 pt-1 pb-1'
-  ul class='nav flex-column pb-4'
-    button class='sp btn btn-outline-primary' onclick="location.href='#{categories_path}'" style='width: max-content;'
-      i class='bi bi-arrow-left p-2'
-      | 一覧
+  div class='sp px-5 pt-1 pb-1'
+    ul class='nav flex-column pb-4'
+      button class='sp btn btn-outline-primary' onclick="location.href='#{categories_path}'" style='width: max-content;'
+        i class='bi bi-arrow-left p-2'
+        | 一覧
 
-div style='padding: 0 1rem 0 1rem;'
-  div class='pt-4 pb-3'
-    h4 class='fw-bold' style='text-align: center;' カテゴリー作成フォーム
-  div class='form-format1'
-    = form_for(:category, url: categories_path, method: :post) do |f|
-      div class='form-floating mt-4 mb-3'
-        = f.text_field :title , class: 'form-control', id: 'category_title', placeholder: 'タイトル', required: true
-        = f.label :title, for: 'category_title'
-      div class='form-floating mt-4 mb-3'
-        = f.text_field :path, class: 'form-control', id: 'category_path', placeholder: 'パス', required: true
-        = f.label :path, for: 'category_path'
-      div class='form-floating mt-4 mb-3'
-        = f.select :income, options_for_select([{id: 1, name: '消費扱い', value: false},{id: 2, name: '収入扱い', value: true}].map{|c|[c[:name], c[:value], {}]}, false), {}, {class: 'form-control', id: 'category_income'}
-        = f.label :income, '収入', for: 'category_income'
-      div class='form-floating mt-4 mb-3'
-        = f.text_field :order, class: 'form-control', id: 'category_order'
-        = f.label :order, for: 'category_order'
-      div class='form-floating mt-4 mb-3'
-        = f.select :status, options_for_select([{id: 1, name: '下書き', value: 'draft'},{id: 2, name: '公開済み', value: 'opened'},{id: 3, name: '非公開', value: 'closed'},].map{|c|[c[:name], c[:value], {}]}), { include_blank: 'ステータスが選択されていません' }, {class: 'form-control', id: 'category_status', required: true}
-        = f.label :status, 'ステータス', for: 'category_status'
-      = f.submit "更新する", class: "btn btn-primary"
+  div style='padding: 0 1rem 0 1rem;'
+    div class='pt-4 pb-3'
+      h4 class='fw-bold' style='text-align: center;' カテゴリー作成フォーム
+    div class='form-format1'
+      = form_for(:category, url: categories_path, method: :post) do |f|
+        div class='form-floating mt-4 mb-3'
+          = f.text_field :title, class: 'form-control', id: 'category_title', required: true
+          = f.label :title, 'タイトル', for: 'category_title'
+        div class='form-floating mt-4 mb-3'
+          = f.text_field :path, class: 'form-control', id: 'category_path', required: true
+          = f.label :path, 'パス', for: 'category_path'
+        div class='form-floating mt-4 mb-3 d-flex'
+          = f.text_field :color, maxLength: 9,id: 'category_color', class: 'form-control color_text_field w-75 me-1', required: true
+          = f.color_field :color, id: 'category_color', class: 'form-control arrow_icon_color_selector w-25 ms-1', required: true
+          = f.label :color, 'カラー', for: 'category_color', class: 'form-label'
+        div class='form-floating mt-4 mb-3'
+          = f.select :income, options_for_select([{id: 1, name: '消費扱い', value: false},{id: 2, name: '収入扱い', value: true}].map{|c|[c[:name], c[:value], {}]}, false), {}, {class: 'form-control', id: 'category_income'}
+          = f.label :income, '収入', for: 'category_income'
+        div class='form-floating mt-4 mb-3'
+          = f.text_field :order, class: 'form-control', id: 'category_order'
+          = f.label :order, '順番', for: 'category_order'
+        div class='form-floating mt-4 mb-3'
+          = f.select :status, options_for_select([{id: 1, name: '下書き', value: 'draft'},{id: 2, name: '公開済み', value: 'opened'},{id: 3, name: '非公開', value: 'closed'},].map{|c|[c[:name], c[:value], {}]}), { include_blank: 'ステータスが選択されていません' }, {class: 'form-control', id: 'category_status', required: true}
+          = f.label :status, 'ステータス', for: 'category_status'
+        = f.submit "更新する", class: "btn btn-primary"
+
+  javascript:
+    const colorpicker = document.querySelector('.arrow_icon_color_selector');
+    const color_text_field = document.querySelector('.color_text_field');
+    colorpicker.addEventListener('input', function(e) {
+      color_text_field.value = e.target.value;
+    });

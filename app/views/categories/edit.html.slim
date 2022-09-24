@@ -16,20 +16,29 @@
       div class='form-format1'
         = form_for(:category, url: category_path(params[:id]), method: :put) do |f|
           div class='form-floating mt-4 mb-3'
-            = f.text_field :title, value: @subject.title ,class: 'form-control', id: 'category_title', placeholder: 'タイトル'
-            = f.label :title, for: 'category_title'
+            = f.text_field :title, value: @subject.title ,class: 'form-control', id: 'category_title'
+            = f.label :title, 'タイトル', for: 'category_title'
           div class='form-floating mt-4 mb-3'
-            = f.text_field :path, value: @subject.path, class: 'd-none'
-          div class='form-floating mt-4 mb-3'
-            = f.text_field :path, value: @subject.path, class: 'form-control', id: 'category_path', placeholder: 'パス', disabled: true
-            = f.label :path, for: 'category_path'
+            = f.text_field :path, value: @subject.path, class: 'form-control', id: 'category_path', disabled: true
+            = f.label :path, 'パス', for: 'category_path'
+          div class='form-floating mt-4 mb-3 d-flex'
+            = f.text_field :color, value: @subject.color.slice(0..6), maxLength: 9,id: 'category_color', class: 'form-control color_text_field w-75 me-1', required: true
+            = f.color_field :color, value: @subject.color.slice(0..6), id: 'category_color', class: 'form-control arrow_icon_color_selector w-25 ms-1', required: true
+            = f.label :color, 'カラー', for: 'category_color', class: 'form-label'
           div class='form-floating mt-4 mb-3'
             = f.select :income, options_for_select([{id: 1, name: '消費扱い', value: false},{id: 2, name: '収入扱い', value: true}].map{|c|[c[:name], c[:value], {}]}, selected: !!@subject.income), {}, {class: 'form-control', id: 'category_income', required: true}
             = f.label :income, '収入', for: 'category_income'
           div class='form-floating mt-4 mb-3'
             = f.text_field :order, value: @subject.order, class: 'form-control', id: 'category_order'
-            = f.label :order, for: 'category_order'
+            = f.label :order, '順番', for: 'category_order'
           div class='form-floating mt-4 mb-3'
             = f.select :status, options_for_select([{id: 1, name: '下書き', value: 'draft'},{id: 2, name: '公開済み', value: 'opened'},{id: 3, name: '非公開', value: 'closed'},].map{|c|[c[:name], c[:value], {}]}, @subject.status), {}, {class: 'form-control', id: 'category_status'}
             = f.label :status, 'ステータス', for: 'category_status'
           = f.submit "更新する", class: "btn btn-primary"
+
+  javascript:
+    const colorpicker = document.querySelector('.arrow_icon_color_selector');
+    const color_text_field = document.querySelector('.color_text_field');
+    colorpicker.addEventListener('input', function(e) {
+      color_text_field.value = e.target.value;
+    });

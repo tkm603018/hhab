@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   get 'stores/', to: 'stores#index'
   delete 'stores/:title', to: 'stores#destroy'
   post 'stores/:title', to: 'stores#create'
+  put 'categories/set_random_color', to: 'categories#set_random_color'
+  
 
   resources :items, only: [:index, :edit, :new, :create, :update, :destroy]
   resources :users, only: [:new, :create, :update]

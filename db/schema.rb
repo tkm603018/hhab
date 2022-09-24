@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_18_141305) do
+ActiveRecord::Schema.define(version: 2022_09_24_165210) do
 
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title", null: false, comment: "タイトル"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2022_09_18_141305) do
     t.bigint "user_id", null: false, comment: "userテーブルのid"
     t.boolean "income", default: false, null: false
     t.integer "order", default: 0, null: false
+    t.string "color", default: "#000000", null: false
   end
 
   create_table "items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
