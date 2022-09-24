@@ -1,6 +1,5 @@
 @import "~bootstrap/scss/bootstrap.scss";
 
-
 body {
   background-color: #f5f5f5;
   // font-family: "ヒラギノ角ゴ Pro W3" !important;
@@ -219,4 +218,9 @@ body {
 
 .footer {
   bottom: 0;
+}
+
+.welcome_images {
+  width: 100%; height: auto;
+  filter: drop-shadow(0 0 5px gray);
 }
