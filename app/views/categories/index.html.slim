@@ -3,10 +3,15 @@
 
   - if @subjects.present?
     div class='px-5 pt-1 pb-1'
-      ul class='nav flex-column pb-4'
+      ul class='nav flex-column pb-2'
         button class='sp btn btn-outline-primary' onclick="location.href='#{new_category_path}'" style='width: max-content;'
-          i class='bi bi-plus p-2'
+          i class='bi bi-plus p-2 px-1'
           | 新規作成
+      ul class='nav flex-column pb-2'
+        = button_to categories_set_random_color_path, method: :put, data: { disable_with: "作成中...", confirm: "公開状態にあるカラー全てに自動で色を割り当てます。\n本当に作成してもいいですか？" }, class: 'btn btn-outline-primary' , style: 'width: max-content;'
+          i class='bi bi-palette-fill px-1'
+          | カラーをランダムに一括作成
+        
 
     div class='px-5 pt-1 pb-1'
       div class='pt-2 pb-4'
@@ -18,19 +23,25 @@
               th scope='col' ID
               th scope='col' タイトル
               th scope='col' パス
+              th scope='col' カラー
               th scope='col' 種類
               th scope='col' 順番
+              th scope='col' ステータス
               th scope='col' 削除
 
           tbody
-            - @subjects.map do |subject|
+            - @subjects.map.with_index(1) do |subject, index|
               tr
                 td = link_to subject.id, edit_category_path(subject.id), class: 'text-decoration-none'
                 td = subject.title
                 td = subject.path
-                td = subject.income == 1 ? '収入' : '支出'
+                td 
+                  div class='category-color nav-link-button' style='background-color: #{subject.color}; width: 4rem; height: 1.5rem;'
+                    p class='category-color-tooltip tooltip-top-left' #{subject.color}
+                td = !!subject.income ? '収入' : '支出'
                 td = subject.order
-                td = button_to '削除する', category_path(subject.id), method: :delete, data: { confirm: "本当に削除してもいいですか？" }, class: 'btn btn-outline-danger'
+                td = subject.status_label
+                td = button_to '削除する', category_path(subject.id), method: :delete, data: { disable_with: "削除中...", confirm: "本当に削除してもいいですか？" }, class: 'btn btn-outline-danger'
 
         div id='pagination'
           = paginate @subjects
@@ -42,3 +53,18 @@
         span class='px-3'
           = link_to 'カテゴリーを作成する', new_category_path, class: 'link-primary text-decoration-none'
           bi.bi-chevron-right.text-primary
+
+javascript:
+  document.addEventListener('DOMContentLoaded', () => {
+      const colors = document.querySelectorAll('.category-color');
+      for(var i = 0; i < colors.length; i++){
+        colors[i].addEventListener('mouseover', (e) => {
+          const target = e.target.getElementsByClassName('category-color-tooltip')[0]
+          if (!!target) { target.style.display = 'initial' }
+        },false);
+        colors[i].addEventListener('mouseleave', (e) => {
+          const target = e.target.getElementsByClassName('category-color-tooltip')[0]
+          if (!!target) { target.style.display = 'none' }
+        },false);
+      }
+  },false);
