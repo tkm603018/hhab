@@ -20,13 +20,13 @@ div class='welcome-frame'
   
     div class='px-1 py-4'
       h5 class=' fw-bold mb-4' 月々の消費割合を確認。
-      = image_tag 'sample1.jpg', width: '100%', style: 'filter: drop-shadow(0 0 5px gray);'
+      = image_tag 'sample1.jpg', width: '500', height: '270', alt: 'sample1', class: 'welcome_images'
     div class='px-1 py-4'
       h5 class=' fw-bold mb-4' 月々の消費推移を確認。
-      = image_tag 'sample2.jpg', width: '100%', style: 'filter: drop-shadow(0 0 5px gray);'
+      = image_tag 'sample2.jpg', width: '500', height: '250', alt: 'sample2', class: 'welcome_images'
     div class='px-1 py-4'
       h5 class=' fw-bold mb-4' 記録を追加した項目を月ごとに確認。
-      = image_tag 'sample3.jpg', width: '100%', style:'filter: drop-shadow(0 0 5px gray);'
+      = image_tag 'sample3.jpg', width: '500', height: '200', alt: 'sample3', class: 'welcome_images'
 
 = render '/footer'
 
@@ -34,9 +34,12 @@ javascript:
   const menuButtonElement = document.getElementById("menu-button");
   const sideMenuElement = document.getElementById("side-menu");
   const sideMenuButtonElement = document.getElementById("side-menu-button");
-  sideMenuButtonElement.addEventListener('click', (e) => {
-    sideMenuElement.className = 'd-none'
-  })
-  menuButtonElement.addEventListener('click', (e) => {
-    sideMenuElement.className = 'd-initial'
-  });
+
+  if (!!sideMenuButtonElement) {
+    sideMenuButtonElement.addEventListener('click', (e) => {
+      sideMenuElement.className = 'd-none'
+    })
+    menuButtonElement.addEventListener('click', (e) => {
+      sideMenuElement.className = 'd-initial'
+    })
+  }
