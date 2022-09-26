@@ -13,7 +13,7 @@
           | カラーをランダムに一括作成
         
 
-    div class='px-5 pt-1 pb-1'
+    div class='px-5 pt-1 pb-1' style='min-height: 74vh;'
       div class='pt-2 pb-4'
         h4 class='fw-bold text-center' カテゴリ一覧
       div style='overflow-x: scroll;'
@@ -53,6 +53,7 @@
         span class='px-3'
           = link_to 'カテゴリーを作成する', new_category_path, class: 'link-primary text-decoration-none'
           bi.bi-chevron-right.text-primary
+
 
 javascript:
   document.addEventListener('DOMContentLoaded', () => {
