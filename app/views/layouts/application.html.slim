@@ -16,34 +16,43 @@ html[lang="ja"]
     / link[rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"]
     
   body
-    - flash.each do |key, value|
-      - if key == 'notice' || key == 'info' || key == 'success'
-        div class='flash alert alert-success top-0 w-100 text-center position-absolute' style='z-index: 100;'
-          = content_tag :span, value, class: key
-      - else key == 'danger'
-        div class='flash alert alert-danger top-0 w-100 text-center position-absolute' style='z-index: 100;'
-          = content_tag :span, value, class: key
+    .row.no-gutters.fixed-bottom
+      .col-lg-5.col-md-12
+        - flash.each do |key, value|
+          - if key == 'notice' || key == 'info' || key == 'success'
+            .flash.alert.alert-success.fade.mx-3.show[role="alert"]
+              button.alert-button.data-button.btn.btn-outline.bi.bi-x.me-2[type="button" data-dismiss="alert" aria-label="Close"]
+                span[aria-hidden="true"]
+              = content_tag :span, value, class: key
+          - else key == 'danger'
+            .flash.alert.alert-danger.fade.mx-3.show[role="alert"]
+              button.alert-button.data-button.btn.btn-outline.bi.bi-x.me-2[type="button" data-dismiss="alert" aria-label="Close"]
+                span[aria-hidden="true"]
+              = content_tag :span, value, class: key
     script[src="https://cdn.jsdelivr.net/npm/chart.js"]
-    = yield
-
+    div id='root' style='min-height: 92vh;'
+      = yield
+    = render '/footer'
 
   javascript:
+    const alertButton = document.querySelector(".alert-button");
+    const flashElement = document.querySelector(".flash");
+    if (alertButton != null) {
+      alertButton.addEventListener('click', (e) => {
+        flashElement.style.display = 'none'
+      })
+    }
     const fadeOut = (node, duration) => {
-      
       if (node !== null) {
         node.style.opacity = 1
         const start = performance.now();
-        
         requestAnimationFrame(function tick(timestamp) {
           const easing = (timestamp - start) / duration;
-
-          node.style.opacity = Math.max(1 - easing, 0)
-          
           if (easing < 1) {
             requestAnimationFrame(tick);
           } else {
-            node.style.opacity = 0;
-            node.style.display = 'none';
+            node.style.transition = 'all 2s ease-out';
+            node.style.WebkitTransform = 'translate3d(-1000px,0px,0px) ';
           }
         });
       }
