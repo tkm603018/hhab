@@ -11,7 +11,7 @@
     div class='py-2 text-center'
       canvas id='polar_area' style='max-height: 35rem'
     div class='py-2 text-center' style='font-size: 20px;'
-      canvas id='bar' style='max-height: 35rem'
+      canvas id='bar' height='#{mobile? ? 400 : 300}' style='max-height: 35rem'
 
   = render '/chart'
 
