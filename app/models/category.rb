@@ -1,7 +1,7 @@
 class Category < ApplicationRecord
-  belongs_to :user, foreign_key: 'user_id', primary_key: 'id'
-  has_many :items, foreign_key: 'path'
   belongs_to :user
+  has_many :items, foreign_key: 'category_path', primary_key: 'path'
+  
 
   with_options presence: true do
     validates :title
