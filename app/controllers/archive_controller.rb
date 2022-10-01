@@ -26,11 +26,23 @@ class ArchiveController < ApplicationController
     gon.data = @categories_sum
     gon.polar_area_colors = @categories_title_path_transposed[2]
 
-    @items_dayly = @last_month_items.order(:purchased_at).group_by{|a|a.purchased_at.day}
-    @items_dayly_sum = @items_dayly.map{|a|[a[0], a[1].sum{|b|b.price}]}
-    gon.bar_labels = @items_dayly_sum.map{|a|a[0]}
-    gon.items_dayly_sum = @items_dayly_sum.map{|a|a[1]}
-    gon.bar_colors = gon.items_dayly_sum.map{|a|a > 0 ? '#9bcaeb' : '#ec9ea5'}
+    days = @date.all_month.map{|a|[a.day, 0, 0]}.transpose
+    incomed_items_transpose = @last_month_items.where(category_path: @categories.incomed.pluck(:path)).map{|items| [items.purchased_at.day, items.price]}.transpose
+    outcomed_items_transpose = @last_month_items.where(category_path: @categories.outcomed.pluck(:path)).map{|items| [items.purchased_at.day, items.price]}.transpose
+    if incomed_items_transpose.any?
+      incomed_items_transpose[0].each.with_index(0) do |d, index|
+        days[1][d-1] = days[1][d-1] + incomed_items_transpose[1][index]
+      end
+    end
+    if outcomed_items_transpose.any?
+      outcomed_items_transpose[0].each.with_index(0) do |d, index|
+        days[2][d-1] = days[2][d-1] + outcomed_items_transpose[1][index]
+      end
+    end
+    
+    gon.bar_labels = days[0]
+    gon.incomed_items_dayly_sum = days[1]
+    gon.outcomed_items_dayly_sum = days[2]
   end
 
   def sort_direction
