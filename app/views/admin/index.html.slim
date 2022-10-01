@@ -8,6 +8,14 @@
         canvas id='polar_area' style='max-height: 35rem'
       div class='py-2 text-center' style='font-size: 20px;'
         canvas id='bar' style='max-height: 35rem'
+      div class='py-2 text-center' style='font-size: 20px;'
+        canvas id='line' style='max-height: 35rem'
+        / = select_tag :range_months, options_for_select(@months_count), id: 'select_months_count', class: 'form-select w-25', style: 'display: initial;'
+        / label for="select_months_count" class="form-label" Example range
+        div class='d-flex' style='justify-content: center;'
+          span class='px-2' 最大化
+          input type='range' class='form-range w-25' min='0' max='#{@months_diff}' step='1' id='select_months_count' style='margin-top: 4px;'
+          span class='px-2' 最小化
 
     = render '/chart'
   
