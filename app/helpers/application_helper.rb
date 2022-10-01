@@ -5,4 +5,9 @@ module ApplicationHelper
     url =  { sort: column, direction: direction }
     link_to "#{title} #{sort_direction == 'asc' ? '↓' : '↑'}", "?direction=#{direction}&sort=#{column}#items_table", class: "text-primary text-decoration-none sort_header #{css_class}"
   end
+  
+  def mobile?
+      return true if request.user_agent =~ /Mobile/
+      false
+    end
 end
