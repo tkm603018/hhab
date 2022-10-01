@@ -46,29 +46,29 @@ javascript:
   const barElement = document.getElementById('bar').getContext('2d');
   const barData = {
     labels: gon.bar_labels,
-    datasets: [{
-      label: '利用推移',
-      data: gon.items_dayly_sum,
-      backgroundColor: gon.bar_colors,
-    }]
+    datasets: [
+    {
+      label: '収入',
+      data: gon.incomed_items_dayly_sum,
+      backgroundColor: '#9bcaeb',
+    },
+    {
+      label: '支出',
+      data: gon.outcomed_items_dayly_sum,
+      backgroundColor: '#ec9ea5',
+    },
+    ]
   };
   const barConfig = {
     type: 'bar',
     data: barData,
     options: {
       responsive: true,
+      scales: {
+        x: { display: true, title: {display: true, text: '日付', font: {size: 15}} },
+        y: { display: true, title: {display: true, text: '金額', font: {size: 15}} },
+      },
       plugins: {
-        scales: {
-          r: {
-            pointLabels: {
-              display: true,
-              centerPointLabels: true,
-              font: {
-                size: 18
-              }
-            }
-          }
-        },
         legend: {
           position: 'top',
           labels: {
@@ -86,3 +86,82 @@ javascript:
     },
   };
   new Chart(barElement, barConfig);
+
+  let lineElement = document.getElementById('line').getContext('2d');
+  var line_labels = gon.line_labels
+  var incomed_monthly_sum = gon.incomed_monthly_sum
+  var outcomed_monthly_sum = gon.outcomed_monthly_sum
+  const months_limit = gon.months_diff > 20 ? 20 : 0
+  const lineData = () => { 
+  return ({
+    labels: gon.line_labels.slice(months_limit, gon.months_diff),
+    datasets: [
+    {
+      label: '収入',
+      data: gon.incomed_monthly_sum.slice(months_limit, gon.months_diff),
+      borderColor: '#9bcaeb',
+      backgroundColor: '#9bcaeb',
+    },
+    {
+      label: '支出',
+      data: gon.outcomed_monthly_sum.slice(months_limit, gon.months_diff),
+      borderColor: '#ec9ea5',
+      backgroundColor: '#ec9ea5',
+    },
+    ]
+  })};
+  const lineConfig = () => {return ({
+    type: 'bar',
+    data: lineData(),
+    options: {
+      responsive: true,
+      scales: {
+        x: { display: true, title: {display: true, text: '年月', font: {size: 15}} },
+        y: { display: true, title: {display: true, text: '金額', font: {size: 15}} },
+      },
+      plugins: {
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: '年間収支',
+          font:{size: 20}
+        },
+        ticks: {
+          autoSkip: true,
+          maxTicksLimit: 20,
+          maxRotation: 0,
+          minRotation: 0,
+        },
+      },
+    },
+  })}
+
+  const lineChart = new Chart(lineElement, lineConfig());
+
+  const selectMonthsCountElement = document.getElementById('select_months_count');
+    if (!!selectMonthsCountElement) {
+      selectMonthsCountElement.value = 20
+      const event = 'ontouchstart' in window ? 'touchstart' : 'click';
+      selectMonthsCountElement.addEventListener(event, (e) => {
+        const val = e.target.value
+        lineChart.config.data = {
+        labels: line_labels.slice(val,gon.months_diff),
+        datasets: [
+        {
+          label: '収入',
+          data: incomed_monthly_sum.slice(val,gon.months_diff),
+          borderColor: '#9bcaeb',
+          backgroundColor: '#9bcaeb',
+        },
+        {
+          label: '支出',
+          data: outcomed_monthly_sum.slice(val,gon.months_diff),
+          borderColor: '#ec9ea5',
+          backgroundColor: '#ec9ea5',
+        },]
+        }
+        lineChart.update()
+      })
+    }
