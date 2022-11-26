@@ -1,31 +1,28 @@
-- if signed_in?
-  = render 'sessions/signed'
+= render 'sessions/signed'
 
-  - if @last_month_items.count > 0
-    div style='padding: 0 1rem 0 1rem;'
-      h4 class='fw-bold pb-1' = @charts_title
-      div class='py-2 text-center'
-        canvas id='polar_area' style='max-height: 35rem'
-      div class='py-2 text-center' style='font-size: 20px;'
-        canvas id='bar' height='#{mobile? ? 400 : 300}' style='max-height: 35rem'
-      div class='py-2 text-center' style='font-size: 20px;'
-        canvas id='line' height='#{mobile? ? 400 : 300}' style='max-height: 35rem'
-        / = select_tag :range_months, options_for_select(@months_count), id: 'select_months_count', class: 'form-select w-25', style: 'display: initial;'
-        / label for="select_months_count" class="form-label" Example range
-        div class='d-block' style='justify-content: center;'
-          div class='d-flex' style='justify-content: space-around;'
-            div class='px-2' 最大化
-            div class='px-2' 最小化
-          div class='' style=''
-            input type='range' class='form-range w-100 px-3' min='0' max='#{@months_diff}' step='1' id='select_months_count' style='margin-top: 4px;'
-          
+- if @last_month_items.count > 0
+  div style='padding: 0 1rem 0 1rem;'
+    h4 class='fw-bold pb-1' = @charts_title
+  div class='py-2 text-center'
+    canvas id='polar_area' width='500' height='500' style='max-height: 35rem'
+  div class='py-2 text-center' style='font-size: 20px;'
+    canvas id='bar' height='#{mobile? ? 400 : 300}' style='max-height: 35rem'  
 
-    = render '/chart'
-  
-  - else
-    div class='pt-4 pb-3 text-center'
-      div class='fw-bold' 記録が作成されていません。
-      div class='py-4'
-        span class='px-3 pc'
-          = link_to '記録を作成する', new_item_path, class: 'link-primary text-decoration-none'
-          bi.bi-chevron-right.text-primary
+- else
+  div class='pt-4 pb-3 text-center'
+    div class='fw-bold' 記録が作成されていません。
+    div class='py-4'
+      span class='px-3 pc'
+        = link_to '記録を作成する', new_item_path, class: 'link-primary text-decoration-none'
+        bi.bi-chevron-right.text-primary
+
+div class='py-2 text-center' style='font-size: 20px;'
+  canvas id='line' height='#{mobile? ? 400 : 300}' style='max-height: 35rem'
+  div id='line_chart_cursor'
+    div class='d-flex' style='justify-content: space-around;'
+      div class='px-2' 最大化
+      div class='px-2' 最小化
+    div class='' style=''
+      input type='range' class='form-range w-100 px-3' min='0' max='#{@months_diff}' step='1' id='select_months_count' style='margin-top: 4px;'
+
+= render '/chart'
