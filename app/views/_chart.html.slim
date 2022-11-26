@@ -1,5 +1,5 @@
 javascript:
-  const polar_areaElement = document.getElementById('polar_area').getContext('2d');
+  const polar_areaElement = document.getElementById('polar_area');
   const polar_areaData = {
     labels: gon.labels,
     datasets: [{
@@ -41,9 +41,11 @@ javascript:
       }
     },
   };
-  new Chart(polar_areaElement, polar_areaConfig);
+  if (!!polar_areaElement) {
+    new Chart(polar_areaElement.getContext('2d'), polar_areaConfig);
+  }
 
-  const barElement = document.getElementById('bar').getContext('2d');
+  const barElement = document.getElementById('bar');
   const barData = {
     labels: gon.bar_labels,
     datasets: [
@@ -85,9 +87,11 @@ javascript:
       }
     },
   };
-  new Chart(barElement, barConfig);
+  if (!!barElement) {
+    new Chart(barElement.getContext('2d'), barConfig);
+  }
 
-  let lineElement = document.getElementById('line').getContext('2d');
+  let lineElement = document.getElementById('line');
   var line_labels = gon.line_labels
   var incomed_monthly_sum = gon.incomed_monthly_sum
   var outcomed_monthly_sum = gon.outcomed_monthly_sum
@@ -138,31 +142,37 @@ javascript:
     },
   })}
 
-  const lineChart = new Chart(lineElement, lineConfig());
+  if (!!lineElement) {
+    const lineChart = new Chart(lineElement.getContext('2d'), lineConfig());
+    const selectMonthsCountElement = document.getElementById('select_months_count');
+      if (!!selectMonthsCountElement) {
+        selectMonthsCountElement.value = 20
+        const event = 'ontouchstart' in window ? 'touchstart' : 'click';
+        selectMonthsCountElement.addEventListener(event, (e) => {
+          const val = e.target.value
+          lineChart.config.data = {
+          labels: line_labels.slice(val,gon.months_diff),
+          datasets: [
+          {
+            label: '収入',
+            data: incomed_monthly_sum.slice(val,gon.months_diff),
+            borderColor: '#9bcaeb',
+            backgroundColor: '#9bcaeb',
+          },
+          {
+            label: '支出',
+            data: outcomed_monthly_sum.slice(val,gon.months_diff),
+            borderColor: '#ec9ea5',
+            backgroundColor: '#ec9ea5',
+          },]
+          }
 
-  const selectMonthsCountElement = document.getElementById('select_months_count');
-    if (!!selectMonthsCountElement) {
-      selectMonthsCountElement.value = 20
-      const event = 'ontouchstart' in window ? 'touchstart' : 'click';
-      selectMonthsCountElement.addEventListener(event, (e) => {
-        const val = e.target.value
-        lineChart.config.data = {
-        labels: line_labels.slice(val,gon.months_diff),
-        datasets: [
-        {
-          label: '収入',
-          data: incomed_monthly_sum.slice(val,gon.months_diff),
-          borderColor: '#9bcaeb',
-          backgroundColor: '#9bcaeb',
-        },
-        {
-          label: '支出',
-          data: outcomed_monthly_sum.slice(val,gon.months_diff),
-          borderColor: '#ec9ea5',
-          backgroundColor: '#ec9ea5',
-        },]
-        }
-
-        lineChart.update()
-      })
+          lineChart.update()
+        })
+      }
+  } else {
+    const lineChartCursorElement = document.getElementById('line_chart_cursor');
+    if (!!lineChartCursorElement) {
+      lineChartCursorElement.style.display = 'none';
     }
+  }
