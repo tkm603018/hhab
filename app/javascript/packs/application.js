@@ -12,6 +12,8 @@ import "channels"
 import "bootstrap"
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import "../stylesheets/application.scss"
+import Chart from "chart.js/auto";
+global.Chart = Chart;
 
 Rails.start()
 // Turbolinks.start()
