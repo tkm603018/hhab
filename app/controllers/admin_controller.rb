@@ -6,34 +6,35 @@ class AdminController < ApplicationController
     last_month = Date.today.last_month.all_month
     @charts_title = "先月(#{last_month.first.year}年#{last_month.first.month}月)"
     @last_month_items = current_user.items.where(purchased_at: ["#{last_month.first} 00:00:00.000000000 JST +09:00".."#{last_month.first.end_of_month} 23:59:59 +0900"])
-
+    
     categories = current_user.categories.published.order(order: 'asc')
     categories_title_path = categories.pluck(:title, :path, :color)
-    items = @last_month_items.group(:category_path).sum(:price)
-
-    gon.data = categories_title_path.map{|a| items[a[1]] == nil ? 0 : items[a[1]]}
-    categories_title_path_transposed = categories_title_path.transpose
-    gon.labels = categories_title_path_transposed[0]
-    gon.polar_area_colors = categories_title_path_transposed[2]
-
-
-    days = last_month.map{|a|[a.day, 0, 0]}.transpose
-    incomed_items_transpose = @last_month_items.where(category_path: categories.incomed.pluck(:path)).map{|items| [items.purchased_at.day, items.price]}.transpose
-    outcomed_items_transpose = @last_month_items.where(category_path: categories.outcomed.pluck(:path)).map{|items| [items.purchased_at.day, items.price]}.transpose
-    if incomed_items_transpose.any?
-      incomed_items_transpose[0].each.with_index(0) do |d, index|
-        days[1][d-1] = days[1][d-1] + incomed_items_transpose[1][index]
-      end
-    end
-    if outcomed_items_transpose.any?
-      outcomed_items_transpose[0].each.with_index(0) do |d, index|
-        days[2][d-1] = days[2][d-1] + outcomed_items_transpose[1][index]
-      end
-    end
     
-    gon.bar_labels = days[0]
-    gon.incomed_items_dayly_sum = days[1]
-    gon.outcomed_items_dayly_sum = days[2]
+    if @last_month_items
+      items = @last_month_items.group(:category_path).sum(:price)
+      gon.data = categories_title_path.map{|a| items[a[1]] == nil ? 0 : items[a[1]]}
+      categories_title_path_transposed = categories_title_path.transpose
+      gon.labels = categories_title_path_transposed[0]
+      gon.polar_area_colors = categories_title_path_transposed[2]
+
+      days = last_month.map{|a|[a.day, 0, 0]}.transpose
+      incomed_items_transpose = @last_month_items.where(category_path: categories.incomed.pluck(:path)).map{|items| [items.purchased_at.day, items.price]}.transpose
+      outcomed_items_transpose = @last_month_items.where(category_path: categories.outcomed.pluck(:path)).map{|items| [items.purchased_at.day, items.price]}.transpose
+      if incomed_items_transpose.any?
+        incomed_items_transpose[0].each.with_index(0) do |d, index|
+          days[1][d-1] = days[1][d-1] + incomed_items_transpose[1][index]
+        end
+      end
+      if outcomed_items_transpose.any?
+        outcomed_items_transpose[0].each.with_index(0) do |d, index|
+          days[2][d-1] = days[2][d-1] + outcomed_items_transpose[1][index]
+        end
+      end
+      
+      gon.bar_labels = days[0]
+      gon.incomed_items_dayly_sum = days[1]
+      gon.outcomed_items_dayly_sum = days[2]
+    end
 
 
     items = current_user.items.where(category_path: categories.outcomed.pluck(:path))
